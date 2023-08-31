@@ -18,7 +18,7 @@ namespace RestauranteAPI.Controllers
             //_logger = logger;
         }
 
-        [HttpGet]
+        [HttpGet("orders/{id}")]
         public IActionResult GetAllProductOrders(int id)
         {
             return Ok(_refeicaoRepository.GetOrders(id));

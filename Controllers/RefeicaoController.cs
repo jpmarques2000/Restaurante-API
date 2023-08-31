@@ -113,7 +113,7 @@ namespace RestauranteAPI.Controllers
         /// <returns></returns>
         /// <response code="200">Sucesso</response>
         /// <response code="401">Não Autenticado</response>
-        /// <response code="403">Não Autorizado | Sem permissão</response> 
+        /// <response code="403">Não Autorizado | Sem permissão</response>
         [HttpDelete]
         public IActionResult DeleteMeal(int id) 
         {

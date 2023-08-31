@@ -20,5 +20,10 @@ namespace RestauranteAPI.Entity
         {
             NomeCardapio = cadastrarCardapioDTO.NomeCardapio;
         }
+
+        public Cardapio(AlterarCardapioDTO cardapioDTO)
+        {
+            NomeCardapio = cardapioDTO.NomeCardapio;
+        }
     }
 }

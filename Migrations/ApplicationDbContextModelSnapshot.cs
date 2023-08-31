@@ -33,7 +33,7 @@ namespace RestauranteAPI.Migrations
 
                     b.HasIndex("RefeicaoId");
 
-                    b.ToTable("CardapioRefeicao");
+                    b.ToTable("CardapioRefeicao", (string)null);
                 });
 
             modelBuilder.Entity("PedidoRefeicao", b =>
@@ -48,7 +48,7 @@ namespace RestauranteAPI.Migrations
 
                     b.HasIndex("RefeicaoId");
 
-                    b.ToTable("PedidoRefeicao");
+                    b.ToTable("PedidoRefeicao", (string)null);
                 });
 
             modelBuilder.Entity("RestauranteAPI.Entity.Cardapio", b =>
@@ -65,7 +65,7 @@ namespace RestauranteAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Cardapio");
+                    b.ToTable("Cardapio", (string)null);
                 });
 
             modelBuilder.Entity("RestauranteAPI.Entity.Pedido", b =>
@@ -86,7 +86,7 @@ namespace RestauranteAPI.Migrations
 
                     b.HasIndex("UsuarioId");
 
-                    b.ToTable("Pedido");
+                    b.ToTable("Pedido", (string)null);
                 });
 
             modelBuilder.Entity("RestauranteAPI.Entity.Refeicao", b =>
@@ -110,7 +110,7 @@ namespace RestauranteAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Refeicao");
+                    b.ToTable("Refeicao", (string)null);
                 });
 
             modelBuilder.Entity("RestauranteAPI.Entity.Usuario", b =>
@@ -135,7 +135,7 @@ namespace RestauranteAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Usuario");
+                    b.ToTable("Usuario", (string)null);
                 });
 
             modelBuilder.Entity("CardapioRefeicao", b =>

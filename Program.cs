@@ -19,6 +19,7 @@ builder.Services.AddSwaggerGen( c =>
 });
 
 builder.Services.AddScoped<IRefeicaoRepository, EFRefeicaoRepository>();
+builder.Services.AddScoped<ICardapioRepository, EFCardapioRepository>();
 builder.Services.AddDbContext<ApplicationDbContext>(ServiceLifetime.Scoped);
 
 var app = builder.Build();

@@ -2,7 +2,6 @@
 {
     public class CadastrarCardapioDTO
     {
-        public string? Nome { get; set; }
-        public int RefeicaoId { get; set; }
+        public string? NomeCardapio { get; set; }
     }
 }

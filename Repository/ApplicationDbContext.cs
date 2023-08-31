@@ -13,6 +13,8 @@ namespace RestauranteAPI.Repository
         }
 
         public DbSet<Refeicao> Refeicao { get; set; }
+        public DbSet<Usuario> Usuario { get; set; }
+        public DbSet<Pedido> Pedido { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

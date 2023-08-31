@@ -1,11 +1,14 @@
 ﻿using RestauranteAPI.DTO;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RestauranteAPI.Entity
 {
     public class Cardapio : Entidade
     {
-        public string? Nome { get; set; }
-        public int RefeicaoId { get; set; }
+        [Required]
+        [Column(TypeName = "varchar(80)")]
+        public string? NomeCardapio { get; set; }
         public ICollection<Refeicao> Refeicao { get; set; }
 
         public Cardapio()
@@ -15,8 +18,7 @@ namespace RestauranteAPI.Entity
 
         public Cardapio(CadastrarCardapioDTO cadastrarCardapioDTO)
         {
-            Nome = cadastrarCardapioDTO.Nome;
-            RefeicaoId = cadastrarCardapioDTO.RefeicaoId;
+            NomeCardapio = cadastrarCardapioDTO.NomeCardapio;
         }
     }
 }

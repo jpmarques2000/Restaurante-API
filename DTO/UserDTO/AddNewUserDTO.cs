@@ -1,6 +1,6 @@
-﻿namespace RestauranteAPI.DTO
+﻿namespace RestauranteAPI.DTO.User
 {
-    public class CadastrarUsuarioDTO
+    public class AddNewUserDTO
     {
         public string Nome { get; set; }
         public string NomeUsuario { get; set; }

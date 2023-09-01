@@ -1,4 +1,4 @@
-﻿namespace RestauranteAPI.Entity
+﻿namespace RestauranteAPI.Models
 {
     public class ServiceResponse<T>
     {

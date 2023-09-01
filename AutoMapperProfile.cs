@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using RestauranteAPI.DTO.Meal;
-using RestauranteAPI.Entity;
+using RestauranteAPI.Models;
 
 namespace RestauranteAPI
 {
@@ -8,7 +8,7 @@ namespace RestauranteAPI
     {
         public AutoMapperProfile()
         {
-            CreateMap<Refeicao, GetMealDTO>();
+            CreateMap<Meal, GetMealDTO>();
         }
     }
 }

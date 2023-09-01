@@ -2,9 +2,9 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace RestauranteAPI.Entity
+namespace RestauranteAPI.Models
 {
-    public class Refeicao : Entidade
+    public class Meal : Entity
     {
         [Required]
         [Key]
@@ -18,21 +18,21 @@ namespace RestauranteAPI.Entity
         [Column(TypeName = "varchar(200)")]
         [Required]
         public string Descricao { get; set; }
-        public ICollection<Pedido> Pedidos { get; set; }
-        public ICollection<Cardapio> Cardapio { get; set; }
+        public ICollection<Order> Pedidos { get; set; }
+        public ICollection<Menu> Cardapio { get; set; }
 
-        public Refeicao()
+        public Meal()
         {
-            
+
         }
-        public Refeicao(CadastrarRefeicaoDTO cadastrarRefeicaoDTO)
+        public Meal(AddNewMealDTO cadastrarRefeicaoDTO)
         {
             Nome = cadastrarRefeicaoDTO.Nome;
             Preco = cadastrarRefeicaoDTO.Preco;
             Descricao = cadastrarRefeicaoDTO.Descricao;
         }
 
-        public Refeicao(UpdateMealDTO alterarRefeicaoDTO)
+        public Meal(UpdateMealDTO alterarRefeicaoDTO)
         {
             Nome = alterarRefeicaoDTO.Nome;
             Preco = alterarRefeicaoDTO.Preco;

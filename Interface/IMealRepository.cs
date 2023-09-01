@@ -1,11 +1,11 @@
 ﻿using RestauranteAPI.DTO.Meal;
-using RestauranteAPI.Entity;
+using RestauranteAPI.Models;
 
 namespace RestauranteAPI.Interface
 {
-    public interface IRefeicaoRepository : IRepository<Refeicao>
+    public interface IMealRepository : IRepository<Meal>
     {
-        Refeicao GetOrders(int id);
+        Meal GetOrders(int id);
 
         Task<ServiceResponse<GetMealDTO>> UpdateMealAsync(UpdateMealDTO updatedMeal);
     }

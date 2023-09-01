@@ -2,20 +2,20 @@
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using RestauranteAPI.DTO.Meal;
-using RestauranteAPI.Entity;
 using RestauranteAPI.Interface;
+using RestauranteAPI.Models;
 
 namespace RestauranteAPI.Repository
 {
-    public class EFRefeicaoRepository : EFRepository<Refeicao>, IRefeicaoRepository
+    public class EFMealRepository : EFRepository<Meal>, IMealRepository
     {
         private readonly IMapper _mapper;
-        public EFRefeicaoRepository(ApplicationDbContext context, IMapper mapper) : base(context)
+        public EFMealRepository(ApplicationDbContext context, IMapper mapper) : base(context)
         {
             _mapper = mapper;
         }
 
-        public Refeicao GetOrders(int id)
+        public Meal GetOrders(int id)
         {
             throw new NotImplementedException();
         }

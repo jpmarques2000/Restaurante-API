@@ -1,10 +1,10 @@
-﻿using RestauranteAPI.DTO;
+﻿using RestauranteAPI.DTO.User;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace RestauranteAPI.Entity
+namespace RestauranteAPI.Models
 {
-    public class Usuario : Entidade
+    public class User : Entity
     {
         [Column(TypeName = "varchar(80)")]
         [Required]
@@ -15,14 +15,14 @@ namespace RestauranteAPI.Entity
         [Column(TypeName = "varchar(40)")]
         [Required]
         public string Senha { get; set; }
-        public ICollection<Pedido> Pedidos { get; set; }
+        public ICollection<Order> Pedidos { get; set; }
 
-        public Usuario()
+        public User()
         {
-            
+
         }
 
-        public Usuario(CadastrarUsuarioDTO cadastrarUsuarioDto)
+        public User(AddNewUserDTO cadastrarUsuarioDto)
         {
             Nome = cadastrarUsuarioDto.Nome;
             NomeUsuario = cadastrarUsuarioDto.NomeUsuario;

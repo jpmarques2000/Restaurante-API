@@ -1,10 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RestauranteAPI.Entity;
 using RestauranteAPI.Interface;
 
 namespace RestauranteAPI.Repository
 {
-    public class EFRepository<T> : IRepository<T> where T : Entidade
+    public class EFRepository<T> : IRepository<T> where T : Models.Entity
     {
         protected ApplicationDbContext _context;
         protected DbSet<T> _dbset;

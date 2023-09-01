@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RestauranteAPI.Entity;
+using RestauranteAPI.Models;
 
 namespace RestauranteAPI.Repository
 {
@@ -12,10 +12,10 @@ namespace RestauranteAPI.Repository
             _configuration = configuration;
         }
 
-        public DbSet<Refeicao> Refeicao { get; set; }
-        public DbSet<Usuario> Usuario { get; set; }
-        public DbSet<Pedido> Pedido { get; set; }
-        public DbSet<Cardapio> Cardapio { get; set; }
+        public DbSet<Meal> Refeicao { get; set; }
+        public DbSet<User> Usuario { get; set; }
+        public DbSet<Order> Pedido { get; set; }
+        public DbSet<Menu> Cardapio { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

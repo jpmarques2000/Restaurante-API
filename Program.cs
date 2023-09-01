@@ -19,8 +19,8 @@ builder.Services.AddSwaggerGen( c =>
 });
 
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
-builder.Services.AddScoped<IRefeicaoRepository, EFRefeicaoRepository>();
-builder.Services.AddScoped<ICardapioRepository, EFCardapioRepository>();
+builder.Services.AddScoped<IMealRepository, EFMealRepository>();
+builder.Services.AddScoped<IMenuRepository, EFMenuRepository>();
 builder.Services.AddDbContext<ApplicationDbContext>(ServiceLifetime.Scoped);
 
 var app = builder.Build();

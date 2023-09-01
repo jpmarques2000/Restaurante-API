@@ -1,4 +1,4 @@
-﻿namespace RestauranteAPI.DTO
+﻿namespace RestauranteAPI.DTO.Menu
 {
     public class AlterarCardapioDTO
     {

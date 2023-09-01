@@ -1,18 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RestauranteAPI.DTO.Meal;
-using RestauranteAPI.Entity;
 using RestauranteAPI.Interface;
+using RestauranteAPI.Models;
 
 namespace RestauranteAPI.Controllers
 {
     [ApiController]
     [Route("Refeicao")]
-    public class RefeicaoController : ControllerBase
+    public class MealsController : ControllerBase
     {
-        private readonly IRefeicaoRepository _refeicaoRepository;
-        private readonly ILogger<RefeicaoController> _logger;
+        private readonly IMealRepository _refeicaoRepository;
+        private readonly ILogger<MealsController> _logger;
 
-        public RefeicaoController(IRefeicaoRepository refeicaoRepository, ILogger<RefeicaoController> logger)
+        public MealsController(IMealRepository refeicaoRepository, ILogger<MealsController> logger)
         {
             _refeicaoRepository = refeicaoRepository;
             _logger = logger;
@@ -80,9 +80,9 @@ namespace RestauranteAPI.Controllers
         /// <response code="401">Não Autenticado</response>
         /// <response code="403">Não Autorizado | Sem permissão</response>
         [HttpPost]
-        public IActionResult NewMeal(CadastrarRefeicaoDTO refeicaoDTO)
+        public IActionResult NewMeal(AddNewMealDTO refeicaoDTO)
         {
-             _refeicaoRepository.AddNew(new Refeicao(refeicaoDTO));
+             _refeicaoRepository.AddNew(new Meal(refeicaoDTO));
             return Ok("Refeição cadastrada com sucesso!");
         }
 

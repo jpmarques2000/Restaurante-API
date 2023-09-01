@@ -1,26 +1,26 @@
-﻿using RestauranteAPI.DTO;
+﻿using RestauranteAPI.DTO.Order;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace RestauranteAPI.Entity
+namespace RestauranteAPI.Models
 {
-    public class Pedido : Entidade
+    public class Order : Entity
     {
         public int UsuarioId { get; set; }
         [Column(TypeName = "decimal(18,4)")]
         [Required]
         public decimal PrecoTotal { get; set; }
-        public Usuario Usuario { get; set; }
+        public User Usuario { get; set; }
         //public Refeicao? Refeicao { get; set; }
-        public ICollection<Refeicao> Refeicao { get; set; }
-        
+        public ICollection<Meal> Refeicao { get; set; }
 
-        public Pedido()
+
+        public Order()
         {
-            
+
         }
 
-        public Pedido(CadastrarPedidoDTO cadastrarPedidoDTO)
+        public Order(AddNewOrderDTO cadastrarPedidoDTO)
         {
             UsuarioId = cadastrarPedidoDTO.UsuarioId;
             PrecoTotal = cadastrarPedidoDTO.PrecoTotal;

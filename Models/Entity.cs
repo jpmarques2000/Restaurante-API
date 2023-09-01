@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace RestauranteAPI.Entity
+namespace RestauranteAPI.Models
 {
-    public class Entidade
+    public class Entity
     {
         [Key]
         [Required]

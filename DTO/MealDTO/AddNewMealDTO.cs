@@ -1,6 +1,6 @@
 ﻿namespace RestauranteAPI.DTO.Meal
 {
-    public class CadastrarRefeicaoDTO
+    public class AddNewMealDTO
     {
         public string Nome { get; set; }
         public decimal Preco { get; set; }

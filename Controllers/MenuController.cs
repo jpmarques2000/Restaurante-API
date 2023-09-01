@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RestauranteAPI.DTO;
-using RestauranteAPI.Entity;
+using RestauranteAPI.DTO.Menu;
+using RestauranteAPI.Models;
 using RestauranteAPI.Interface;
 using RestauranteAPI.Repository;
 
@@ -8,12 +8,12 @@ namespace RestauranteAPI.Controllers
 {
     [ApiController]
     [Route("Cardapio")]
-    public class CardapioController : ControllerBase
+    public class MenuController : ControllerBase
     {
-        private readonly ICardapioRepository _cardapioRepository;
-        private readonly ILogger<RefeicaoController> _logger;
+        private readonly IMenuRepository _cardapioRepository;
+        private readonly ILogger<MealsController> _logger;
 
-        public CardapioController(ICardapioRepository cardapioRepository, ILogger<RefeicaoController> logger)
+        public MenuController(IMenuRepository cardapioRepository, ILogger<MealsController> logger)
         {
             _cardapioRepository = cardapioRepository;
             _logger = logger;
@@ -63,9 +63,9 @@ namespace RestauranteAPI.Controllers
         /// <response code="401">Não Autenticado</response>
         /// <response code="403">Não Autorizado | Sem permissão</response>
         [HttpPost]
-        public IActionResult CreateNewMenu(CadastrarCardapioDTO cardapioDTO)
+        public IActionResult CreateNewMenu(AddNewMenuDTO cardapioDTO)
         {
-            _cardapioRepository.AddNew(new Cardapio(cardapioDTO));
+            _cardapioRepository.AddNew(new Menu(cardapioDTO));
             return Ok("Cardápio cadastrado com sucesso!");
         }
 
@@ -85,7 +85,7 @@ namespace RestauranteAPI.Controllers
         [HttpPut]
         public IActionResult UpdateMenuAsync(AlterarCardapioDTO cardapioDTO)
         {
-            _cardapioRepository.Update(new Cardapio(cardapioDTO));
+            _cardapioRepository.Update(new Menu(cardapioDTO));
             return Ok("Cardápio alterada com sucesso");
         }
 

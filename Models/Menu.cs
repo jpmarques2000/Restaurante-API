@@ -1,27 +1,27 @@
-﻿using RestauranteAPI.DTO;
+﻿using RestauranteAPI.DTO.Menu;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace RestauranteAPI.Entity
+namespace RestauranteAPI.Models
 {
-    public class Cardapio : Entidade
+    public class Menu : Entity
     {
         [Required]
         [Column(TypeName = "varchar(80)")]
         public string? NomeCardapio { get; set; }
-        public ICollection<Refeicao> Refeicao { get; set; }
+        public ICollection<Meal> Refeicao { get; set; }
 
-        public Cardapio()
+        public Menu()
         {
-            
+
         }
 
-        public Cardapio(CadastrarCardapioDTO cadastrarCardapioDTO)
+        public Menu(AddNewMenuDTO cadastrarCardapioDTO)
         {
             NomeCardapio = cadastrarCardapioDTO.NomeCardapio;
         }
 
-        public Cardapio(AlterarCardapioDTO cardapioDTO)
+        public Menu(AlterarCardapioDTO cardapioDTO)
         {
             NomeCardapio = cardapioDTO.NomeCardapio;
         }

@@ -1,8 +1,6 @@
-﻿using RestauranteAPI.Entity;
-
-namespace RestauranteAPI.Interface
+﻿namespace RestauranteAPI.Interface
 {
-    public interface IRepository<T> where T : Entidade
+    public interface IRepository<T> where T : Models.Entity
     {
         IList<T> GetAll();
         T GetById(int id);

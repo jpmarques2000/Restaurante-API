@@ -6,20 +6,17 @@ namespace RestauranteAPI.Models
 {
     public class Meal : Entity
     {
-        [Required]
-        [Key]
-        public int Id { get; set; }
         [Column(TypeName = "varchar(80)")]
         [Required]
-        public string Nome { get; set; }
+        public string? Nome { get; set; }
         [Column(TypeName = "decimal(18,4)")]
         [Required]
         public decimal Preco { get; set; }
         [Column(TypeName = "varchar(200)")]
         [Required]
-        public string Descricao { get; set; }
-        public ICollection<Order> Pedidos { get; set; }
-        public ICollection<Menu> Cardapio { get; set; }
+        public string? Descricao { get; set; }
+        public ICollection<Order>? Pedidos { get; set; }
+        public ICollection<Menu>? Cardapio { get; set; }
 
         public Meal()
         {

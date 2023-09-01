@@ -9,21 +9,21 @@ namespace RestauranteAPI.Models
         [Required]
         [Column(TypeName = "varchar(80)")]
         public string? NomeCardapio { get; set; }
-        public ICollection<Meal> Refeicao { get; set; }
+        public ICollection<Meal>? Refeicao { get; set; }
 
         public Menu()
         {
 
         }
 
-        public Menu(AddNewMenuDTO cadastrarCardapioDTO)
+        public Menu(AddNewMenuDTO menuDTO)
         {
-            NomeCardapio = cadastrarCardapioDTO.NomeCardapio;
+            NomeCardapio = menuDTO.NomeCardapio;
         }
 
-        public Menu(AlterarCardapioDTO cardapioDTO)
+        public Menu(UpdateMenuDTO menuDTO)
         {
-            NomeCardapio = cardapioDTO.NomeCardapio;
+            NomeCardapio = menuDTO.NomeCardapio;
         }
     }
 }

@@ -1,39 +1,39 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RestauranteAPI.DTO.Menu;
-using RestauranteAPI.Models;
+using RestauranteAPI.DTO.User;
+using RestauranteAPI.DTO.UserDTO;
 using RestauranteAPI.Interface;
-using RestauranteAPI.Repository;
+using RestauranteAPI.Models;
 
 namespace RestauranteAPI.Controllers
 {
     [ApiController]
-    [Route("Cardapio")]
-    public class MenuController : ControllerBase
+    [Route("User")]
+    public class UserController : ControllerBase
     {
-        private readonly IMenuRepository _menuRepository;
+        private readonly IUserRepository _userRepository;
         private readonly ILogger<MealsController> _logger;
 
-        public MenuController(IMenuRepository menuRepository, ILogger<MealsController> logger)
+        public UserController(IUserRepository userRepository, ILogger<MealsController> logger)
         {
-            _menuRepository = menuRepository;
+            _userRepository = userRepository;
             _logger = logger;
         }
 
         /// <summary>
-        /// Obtém todos os cardápios cadastrados
+        /// Obtém todos usuários cadastrados
         /// </summary>
         /// <returns></returns>
         /// <response code="200">Sucesso</response>
         /// <response code="401">Não Autenticado</response>
         /// <response code="403">Não Autorizado | Sem permissão</response>
         [HttpGet]
-        public IActionResult GetMenus()
+        public IActionResult GetUsers()
         {
-            return Ok(_menuRepository.GetAll());
+            return Ok(_userRepository.GetAll());
         }
 
         /// <summary>
-        /// Obtém cardápio por Id
+        /// Obtém usuário pelo Id
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -44,67 +44,64 @@ namespace RestauranteAPI.Controllers
         /// <response code="401">Não Autenticado</response>
         /// <response code="403">Não Autorizado | Sem permissão</response>
         [HttpGet("get-by-id/{id}")]
-        public IActionResult GetMenusById(int id)
+        public IActionResult GetUserById(int id)
         {
-            return Ok(_menuRepository.GetById(id));
+            return Ok(_userRepository.GetById(id));
         }
 
         /// <summary>
-        /// Criar novo cardápio
+        /// Cadastra novo usuário
         /// </summary>
-        /// <param name="menuDTO"></param>
+        /// <param name="userDTO"></param>
         /// <returns></returns>
         /// <remarks>
         /// Dados:
         /// 
-        /// Nome do cardápio
+        /// Nome, Nome de usuário e Senha
         /// </remarks>
         /// <response code="200">Sucesso</response>
         /// <response code="401">Não Autenticado</response>
         /// <response code="403">Não Autorizado | Sem permissão</response>
         [HttpPost]
-        public IActionResult CreateNewMenu(AddNewMenuDTO menuDTO)
+        public IActionResult AddNewUser(AddNewUserDTO userDTO)
         {
-            _menuRepository.AddNew(new Menu(menuDTO));
-            return Ok("Cardápio cadastrado com sucesso!");
+            _userRepository.AddNew(new User(userDTO));
+            return Ok("Usuário cadastrado com sucesso.");
         }
 
         /// <summary>
-        /// Atualizar cardápio
+        /// Altera dados do usuário já cadastrado
         /// </summary>
-        /// <param name="menuDTO"></param>
+        /// <param name="userDTO"></param>
         /// <returns></returns>
         /// <remarks>
         /// Dados:
         /// 
-        /// Id e novo nome do cardápio
+        /// Nome, Nome de usuário e Senha
         /// </remarks>
         /// <response code="200">Sucesso</response>
         /// <response code="401">Não Autenticado</response>
-        /// <response code="403">Não Autorizado | Sem permissão</response>
+        /// <response code="403">Não Autorizado | Sem permissão</response> 
         [HttpPut]
-        public IActionResult UpdateMenuAsync(UpdateMenuDTO menuDTO)
+        public IActionResult UpdateUser(UpdateUserDTO userDTO)
         {
-            _menuRepository.UpdateMenuAsync(menuDTO);
-            return Ok("Cardápio alterada com sucesso");
+            _userRepository.UpdateUserAsync(userDTO);
+            return Ok("Usuário alterado com sucesso.");
         }
 
         /// <summary>
-        /// Exclui cardápio existente
+        /// Deletar usuário
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         /// <remarks>
-        /// Enviar Id do cardápio a ser removido
+        /// Enviar Id de usuário a ser removido
         /// </remarks>
-        /// <response code="200">Sucesso</response>
-        /// <response code="401">Não Autenticado</response>
-        /// <response code="403">Não Autorizado | Sem permissão</response>
         [HttpDelete]
-        public IActionResult DeleteMenu(int id)
+        public IActionResult DeleteUser(int id)
         {
-            _menuRepository.Delete(id);
-            return Ok("Cardápio removido com sucesso");
+            _userRepository.Delete(id);
+            return Ok("Usuário removido com sucesso.");
         }
     }
 }

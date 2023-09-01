@@ -8,13 +8,13 @@ namespace RestauranteAPI.Models
     {
         [Column(TypeName = "varchar(80)")]
         [Required]
-        public string Nome { get; set; }
+        public string? Nome { get; set; }
         [Column(TypeName = "varchar(80)")]
         [Required]
-        public string NomeUsuario { get; set; }
+        public string? NomeUsuario { get; set; }
         [Column(TypeName = "varchar(40)")]
         [Required]
-        public string Senha { get; set; }
+        public string? Senha { get; set; }
         public ICollection<Order> Pedidos { get; set; }
 
         public User()

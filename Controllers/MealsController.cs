@@ -89,7 +89,7 @@ namespace RestauranteAPI.Controllers
         /// <summary>
         /// Atualizar dados da refeição
         /// </summary>
-        /// <param name="refeicaoDTO"></param>
+        /// <param name="updateMeal"></param>
         /// <returns></returns>
         /// <remarks>
         /// Dados:

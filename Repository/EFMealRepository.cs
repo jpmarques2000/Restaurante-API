@@ -9,10 +9,8 @@ namespace RestauranteAPI.Repository
 {
     public class EFMealRepository : EFRepository<Meal>, IMealRepository
     {
-        private readonly IMapper _mapper;
-        public EFMealRepository(ApplicationDbContext context, IMapper mapper) : base(context)
+        public EFMealRepository(ApplicationDbContext context, IMapper mapper) : base(context, mapper)
         {
-            _mapper = mapper;
         }
 
         public Meal GetOrders(int id)

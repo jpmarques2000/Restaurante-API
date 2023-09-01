@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using RestauranteAPI.Interface;
 
 namespace RestauranteAPI.Repository
@@ -7,11 +8,13 @@ namespace RestauranteAPI.Repository
     {
         protected ApplicationDbContext _context;
         protected DbSet<T> _dbset;
+        protected readonly IMapper _mapper;
 
-        public EFRepository(ApplicationDbContext context)
+        public EFRepository(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
             _dbset = _context.Set<T>();
+            _mapper = mapper;
         }
 
         public void AddNew(T entidade)

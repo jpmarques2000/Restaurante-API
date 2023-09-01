@@ -18,6 +18,7 @@ builder.Services.AddSwaggerGen( c =>
     c.IncludeXmlComments(xmlpath);
 });
 
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddScoped<IRefeicaoRepository, EFRefeicaoRepository>();
 builder.Services.AddScoped<ICardapioRepository, EFCardapioRepository>();
 builder.Services.AddDbContext<ApplicationDbContext>(ServiceLifetime.Scoped);

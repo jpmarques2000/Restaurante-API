@@ -1,8 +1,7 @@
-﻿namespace RestauranteAPI.DTO
+﻿namespace RestauranteAPI.DTO.Meal
 {
-    public class AlterarRefeicaoDTO
+    public class CadastrarRefeicaoDTO
     {
-        public int Id { get; set; }
         public string Nome { get; set; }
         public decimal Preco { get; set; }
         public string Descricao { get; set; }

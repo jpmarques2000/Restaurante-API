@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RestauranteAPI.DTO;
+using RestauranteAPI.DTO.Meal;
 using RestauranteAPI.Entity;
 using RestauranteAPI.Interface;
 
@@ -100,9 +100,9 @@ namespace RestauranteAPI.Controllers
         /// <response code="401">Não Autenticado</response>
         /// <response code="403">Não Autorizado | Sem permissão</response>
         [HttpPut]
-        public IActionResult UpdateMeal(AlterarRefeicaoDTO refeicaoDTO)
+        public async Task<ActionResult<ServiceResponse<ICollection<GetMealDTO>>>> UpdateMeal(UpdateMealDTO updateMeal)
         {
-            _refeicaoRepository.Update(new Refeicao(refeicaoDTO));
+            await _refeicaoRepository.UpdateMealAsync(updateMeal);
             return Ok("Refeição alterada com sucesso");
         }
 

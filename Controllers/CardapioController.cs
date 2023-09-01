@@ -26,9 +26,10 @@ namespace RestauranteAPI.Controllers
         /// <response code="200">Sucesso</response>
         /// <response code="401">Não Autenticado</response>
         /// <response code="403">Não Autorizado | Sem permissão</response>
-        [HttpGet] public IActionResult GetMenus()
+        [HttpGet]
+        public IActionResult GetMenus()
         {
-            return Ok(_cardapioRepository.GetAll());    
+            return Ok(_cardapioRepository.GetAll());
         }
 
         /// <summary>
@@ -43,9 +44,9 @@ namespace RestauranteAPI.Controllers
         /// <response code="401">Não Autenticado</response>
         /// <response code="403">Não Autorizado | Sem permissão</response>
         [HttpGet("get-by-id/{id}")]
-        public IActionResult GetMenusById(int id) 
-        { 
-            return Ok(_cardapioRepository.GetById(id)); 
+        public IActionResult GetMenusById(int id)
+        {
+            return Ok(_cardapioRepository.GetById(id));
         }
 
         /// <summary>
@@ -82,7 +83,7 @@ namespace RestauranteAPI.Controllers
         /// <response code="401">Não Autenticado</response>
         /// <response code="403">Não Autorizado | Sem permissão</response>
         [HttpPut]
-        public IActionResult UpdateMenu(AlterarCardapioDTO cardapioDTO)
+        public IActionResult UpdateMenuAsync(AlterarCardapioDTO cardapioDTO)
         {
             _cardapioRepository.Update(new Cardapio(cardapioDTO));
             return Ok("Cardápio alterada com sucesso");

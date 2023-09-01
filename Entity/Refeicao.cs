@@ -1,4 +1,4 @@
-﻿using RestauranteAPI.DTO;
+﻿using RestauranteAPI.DTO.Meal;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -6,6 +6,9 @@ namespace RestauranteAPI.Entity
 {
     public class Refeicao : Entidade
     {
+        [Required]
+        [Key]
+        public int Id { get; set; }
         [Column(TypeName = "varchar(80)")]
         [Required]
         public string Nome { get; set; }
@@ -29,7 +32,7 @@ namespace RestauranteAPI.Entity
             Descricao = cadastrarRefeicaoDTO.Descricao;
         }
 
-        public Refeicao(AlterarRefeicaoDTO alterarRefeicaoDTO)
+        public Refeicao(UpdateMealDTO alterarRefeicaoDTO)
         {
             Nome = alterarRefeicaoDTO.Nome;
             Preco = alterarRefeicaoDTO.Preco;

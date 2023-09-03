@@ -8,5 +8,6 @@ namespace RestauranteAPI.Interface
     public interface IMenuRepository : IRepository<Menu>
     {
         Task<ServiceResponse<GetMenuDTO>> UpdateMenuAsync(UpdateMenuDTO updatedMenu);
+        Task<ServiceResponse<GetMenuDTO>> AddNewMealToMenu(AddNewMenuMealDTO newMenuMeal);
     }
 }

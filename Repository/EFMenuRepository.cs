@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using RestauranteAPI.DTO.Menu;
 using RestauranteAPI.DTO.MenuDTO;
 using RestauranteAPI.Interface;
@@ -11,6 +12,27 @@ namespace RestauranteAPI.Repository
         public EFMenuRepository(ApplicationDbContext context, IMapper mapper) : base(context, mapper)
         {
         }
+
+        public Task<ServiceResponse<GetMenuDTO>> AddNewMealToMenu(AddNewMenuMealDTO newMenuMeal)
+        {
+            throw new NotImplementedException();
+        }
+
+        //public async Task<ServiceResponse<GetMenuDTO>> AddNewMealToMenu(MenuMeal menuMeal)
+        //{
+        //    var serviceResponse = new ServiceResponse<List<GetMenuDTO>>();
+
+        //    _context.CardapioRefeicao.Add(menuMeal);
+        //    await _context.SaveChangesAsync();
+
+        //    //serviceResponse.Data =
+        //    //    await _context.CardapioRefeicao.ToListAsync();
+
+        //    //return serviceResponse;
+
+        //    throw NotImplementedException();
+
+        //}
 
         public async Task<ServiceResponse<GetMenuDTO>> UpdateMenuAsync(UpdateMenuDTO updatedMenu)
         {

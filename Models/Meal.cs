@@ -16,7 +16,7 @@ namespace RestauranteAPI.Models
         [Required]
         public string? Descricao { get; set; }
         public ICollection<Order>? Pedidos { get; set; }
-        public ICollection<Menu>? Cardapio { get; set; }
+        public ICollection<Menu>? Cardapios { get; set; }
 
         public Meal()
         {

@@ -3,6 +3,7 @@ using RestauranteAPI.DTO.Menu;
 using RestauranteAPI.Models;
 using RestauranteAPI.Interface;
 using RestauranteAPI.Repository;
+using RestauranteAPI.DTO.MenuDTO;
 
 namespace RestauranteAPI.Controllers
 {
@@ -87,6 +88,13 @@ namespace RestauranteAPI.Controllers
         {
             _menuRepository.UpdateMenuAsync(menuDTO);
             return Ok("Cardápio alterada com sucesso");
+        }
+
+        [HttpPost("add-meal-to-menu")]
+        public IActionResult AddNewMealToMenu(AddMealToMenuDTO newMenuMeal)
+        {
+             _menuRepository.AddNewMealToMenu(newMenuMeal);
+            return Ok("Refeição adicionado ao cardárpio");
         }
 
         /// <summary>

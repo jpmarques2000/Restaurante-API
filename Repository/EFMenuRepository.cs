@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Azure;
 using Microsoft.EntityFrameworkCore;
 using RestauranteAPI.DTO.Menu;
 using RestauranteAPI.DTO.MenuDTO;
@@ -13,26 +14,43 @@ namespace RestauranteAPI.Repository
         {
         }
 
-        public Task<ServiceResponse<GetMenuDTO>> AddNewMealToMenu(AddNewMenuMealDTO newMenuMeal)
+        public async Task<ServiceResponse<GetMenuDTO>> AddNewMealToMenu(AddMealToMenuDTO newMenuMeal)
         {
-            throw new NotImplementedException();
+            var serviceResponse = new ServiceResponse<GetMenuDTO>();
+
+            try
+            {
+                var menu = _context.Cardapio.FirstOrDefault(c => c.Id == newMenuMeal.cardapioId);
+
+                if (menu is null)
+                {
+                    serviceResponse.Success = false;
+                    serviceResponse.Message = "Menu not found.";
+                    return serviceResponse;
+                }
+
+                var meal = _context.Refeicao.FirstOrDefault(x => x.Id == newMenuMeal.refeicaoId);
+
+                if (meal is null)
+                {
+                    serviceResponse.Success = false;
+                    serviceResponse.Message = "Meal not found.";
+                    return serviceResponse;
+                }
+
+                menu.Refeicoes!.Add(meal);
+                await _context.SaveChangesAsync();
+                serviceResponse.Data = _mapper.Map<GetMenuDTO>(menu);
+            }
+            catch (Exception ex)
+            {
+
+                serviceResponse.Success = false;
+                serviceResponse.Message = ex.Message;
+            }
+
+            return serviceResponse;
         }
-
-        //public async Task<ServiceResponse<GetMenuDTO>> AddNewMealToMenu(MenuMeal menuMeal)
-        //{
-        //    var serviceResponse = new ServiceResponse<List<GetMenuDTO>>();
-
-        //    _context.CardapioRefeicao.Add(menuMeal);
-        //    await _context.SaveChangesAsync();
-
-        //    //serviceResponse.Data =
-        //    //    await _context.CardapioRefeicao.ToListAsync();
-
-        //    //return serviceResponse;
-
-        //    throw NotImplementedException();
-
-        //}
 
         public async Task<ServiceResponse<GetMenuDTO>> UpdateMenuAsync(UpdateMenuDTO updatedMenu)
         {

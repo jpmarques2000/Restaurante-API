@@ -9,7 +9,7 @@ namespace RestauranteAPI.Models
         [Required]
         [Column(TypeName = "varchar(80)")]
         public string? NomeCardapio { get; set; }
-        public ICollection<Meal>? Refeicao { get; set; }
+        public ICollection<Meal>? Refeicoes { get; set; }
 
         public Menu()
         {

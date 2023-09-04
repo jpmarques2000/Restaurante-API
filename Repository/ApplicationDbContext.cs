@@ -16,7 +16,7 @@ namespace RestauranteAPI.Repository
         public DbSet<User> Usuario { get; set; }
         public DbSet<Order> Pedido { get; set; }
         public DbSet<Menu> Cardapio { get; set; }
-        public DbSet<MenuMeal> CardapioRefeicao { get; set; }
+        public DbSet<MenuMeal> MenuMeal { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -26,7 +26,15 @@ namespace RestauranteAPI.Repository
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
+            //modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
+            modelBuilder.Entity<Meal>().HasData(
+                new Meal { Id = 100000, Nome = "Refeicaoteste1",
+                    Descricao = "Uma refeição teste ai", Preco = 30 },
+                new Meal { Id = 100001, Nome = "Refeicaoteste2",
+                    Descricao = "Outra refeição teste ai", Preco = 20 },
+                new Meal { Id = 100002, Nome = "Refeicaoteste3",
+                    Descricao = "Mais uma refeição teste ai", Preco = 50 }
+            );
         }
     }
 }

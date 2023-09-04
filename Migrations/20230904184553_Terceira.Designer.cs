@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RestauranteAPI.Repository;
 
@@ -10,9 +11,11 @@ using RestauranteAPI.Repository;
 namespace RestauranteAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230904184553_Terceira")]
+    partial class Terceira
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,7 +36,7 @@ namespace RestauranteAPI.Migrations
 
                     b.HasIndex("RefeicoesId");
 
-                    b.ToTable("MealMenu", (string)null);
+                    b.ToTable("MealMenu");
                 });
 
             modelBuilder.Entity("MealOrder", b =>
@@ -48,7 +51,7 @@ namespace RestauranteAPI.Migrations
 
                     b.HasIndex("RefeicaoId");
 
-                    b.ToTable("MealOrder", (string)null);
+                    b.ToTable("MealOrder");
                 });
 
             modelBuilder.Entity("RestauranteAPI.Models.Meal", b =>
@@ -72,7 +75,7 @@ namespace RestauranteAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Refeicao", (string)null);
+                    b.ToTable("Refeicao");
                 });
 
             modelBuilder.Entity("RestauranteAPI.Models.Menu", b =>
@@ -89,7 +92,7 @@ namespace RestauranteAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Cardapio", (string)null);
+                    b.ToTable("Cardapio");
                 });
 
             modelBuilder.Entity("RestauranteAPI.Models.MenuMeal", b =>
@@ -108,7 +111,7 @@ namespace RestauranteAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MenuMeal", (string)null);
+                    b.ToTable("MenuMeal");
                 });
 
             modelBuilder.Entity("RestauranteAPI.Models.Order", b =>
@@ -129,7 +132,7 @@ namespace RestauranteAPI.Migrations
 
                     b.HasIndex("UsuarioId");
 
-                    b.ToTable("Pedido", (string)null);
+                    b.ToTable("Pedido");
                 });
 
             modelBuilder.Entity("RestauranteAPI.Models.User", b =>
@@ -154,7 +157,7 @@ namespace RestauranteAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Usuario", (string)null);
+                    b.ToTable("Usuario");
                 });
 
             modelBuilder.Entity("MealMenu", b =>

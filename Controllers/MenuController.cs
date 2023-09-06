@@ -28,9 +28,9 @@ namespace RestauranteAPI.Controllers
         /// <response code="401">Não Autenticado</response>
         /// <response code="403">Não Autorizado | Sem permissão</response>
         [HttpGet]
-        public IActionResult GetMenus()
+        public async Task<ActionResult<ServiceResponse<GetMenuDTO>>> GetMenu()
         {
-            return Ok(_menuRepository.GetAll());
+            return Ok(await _menuRepository.GetAllMenus());
         }
 
         /// <summary>
@@ -45,29 +45,27 @@ namespace RestauranteAPI.Controllers
         /// <response code="401">Não Autenticado</response>
         /// <response code="403">Não Autorizado | Sem permissão</response>
         [HttpGet("get-by-id/{id}")]
-        public IActionResult GetMenusById(int id)
+        public async Task<ActionResult<ServiceResponse<List<GetMenuDTO>>>> GetMenusById(int id)
         {
-            return Ok(_menuRepository.GetById(id));
+            return Ok(await _menuRepository.GetMenuById(id));
         }
 
         /// <summary>
-        /// Criar novo cardápio
+        /// Adiciona novo cardápio
         /// </summary>
-        /// <param name="menuDTO"></param>
+        /// <param name="menuDto"></param>
         /// <returns></returns>
-        /// <remarks>
         /// Dados:
         /// 
         /// Nome do cardápio
         /// </remarks>
         /// <response code="200">Sucesso</response>
         /// <response code="401">Não Autenticado</response>
-        /// <response code="403">Não Autorizado | Sem permissão</response>
+        /// <response code="403">Não Autorizado | Sem permissão</response> 
         [HttpPost]
-        public IActionResult CreateNewMenu(AddNewMenuDTO menuDTO)
+        public async Task<ActionResult<ServiceResponse<List<GetMenuDTO>>>> AddCharacter(AddMenuDTO menuDto)
         {
-            _menuRepository.AddNew(new Menu(menuDTO));
-            return Ok("Cardápio cadastrado com sucesso!");
+            return Ok(await _menuRepository.AddMenu(menuDto));
         }
 
         /// <summary>
@@ -84,18 +82,17 @@ namespace RestauranteAPI.Controllers
         /// <response code="401">Não Autenticado</response>
         /// <response code="403">Não Autorizado | Sem permissão</response>
         [HttpPut]
-        public IActionResult UpdateMenuAsync(UpdateMenuDTO menuDTO)
+        public async Task<ActionResult<ServiceResponse<List<GetMenuDTO>>>> UpdateMenu(UpdateMenuDTO menuDTO)
         {
-            _menuRepository.UpdateMenuAsync(menuDTO);
-            return Ok("Cardápio alterada com sucesso");
+            return Ok(await _menuRepository.UpdateMenu(menuDTO));
         }
 
-        [HttpPost("add-meal-to-menu")]
-        public IActionResult AddNewMealToMenu(AddMealToMenuDTO newMenuMeal)
-        {
-             _menuRepository.AddNewMealToMenu(newMenuMeal);
-            return Ok("Refeição adicionado ao cardárpio");
-        }
+        //[HttpPost("add-meal-to-menu")]
+        //public IActionResult AddNewMealToMenu(AddMealToMenuDTO newMenuMeal)
+        //{
+        //    _menuRepository.add(newMenuMeal);
+        //    return Ok("Refeição adicionado ao cardárpio");
+        //}
 
         /// <summary>
         /// Exclui cardápio existente
@@ -108,11 +105,10 @@ namespace RestauranteAPI.Controllers
         /// <response code="200">Sucesso</response>
         /// <response code="401">Não Autenticado</response>
         /// <response code="403">Não Autorizado | Sem permissão</response>
-        [HttpDelete]
-        public IActionResult DeleteMenu(int id)
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<ServiceResponse<GetMenuDTO>>> DeleteMenu(int id)
         {
-            _menuRepository.Delete(id);
-            return Ok("Cardápio removido com sucesso");
+            return Ok(await _menuRepository.DeleteMenu(id));
         }
     }
 }

@@ -8,39 +8,94 @@ using RestauranteAPI.Models;
 
 namespace RestauranteAPI.Repository
 {
-    public class EFMenuRepository : EFRepository<Menu>, IMenuRepository
+    public class EFMenuRepository : IMenuRepository
     {
-        public EFMenuRepository(ApplicationDbContext context, IMapper mapper) : base(context, mapper)
+        private readonly IMapper _mapper;
+        private readonly ApplicationDbContext _context;
+
+        public EFMenuRepository(ApplicationDbContext context, IMapper mapper)
         {
+            _context = context;
+            _mapper = mapper;
+        }
+        public async Task<ServiceResponse<List<GetMenuDTO>>> AddMenu(AddMenuDTO newMenu)
+        {
+            var serviceResponse = new ServiceResponse<List<GetMenuDTO>>();
+            var menu = _mapper.Map<Menu>(newMenu);
+
+            _context.Menu.Add(menu);
+            await _context.SaveChangesAsync();
+
+            serviceResponse.Data = 
+                await _context.Menu
+                .Where(m => m.Id == menu.Id)
+                .Select(m => _mapper.Map<GetMenuDTO>(m))
+                .ToListAsync();
+
+            serviceResponse.Message = "Menu adicionado com sucesso";
+
+            return serviceResponse;
         }
 
-        public async Task<ServiceResponse<GetMenuDTO>> AddNewMealToMenu(AddMealToMenuDTO newMenuMeal)
+        //public async Task<ServiceResponse<GetMenuDTO>> AddNewMealToMenu(AddMealToMenuDTO newMenuMeal)
+        //{
+        //    var serviceResponse = new ServiceResponse<GetMenuDTO>();
+
+        //    try
+        //    {
+        //        var menu = _context.Menu.FirstOrDefault(c => c.Id == newMenuMeal.cardapioId);
+
+        //        if (menu is null)
+        //        {
+        //            serviceResponse.Success = false;
+        //            serviceResponse.Message = "Menu not found.";
+        //            return serviceResponse;
+        //        }
+
+        //        var meal = _context.Menu.FirstOrDefault(x => x.Id == newMenuMeal.refeicaoId);
+
+        //        if (meal is null)
+        //        {
+        //            serviceResponse.Success = false;
+        //            serviceResponse.Message = "Meal not found.";
+        //            return serviceResponse;
+        //        }
+
+        //        menu.Refeicoes!.Add(meal);
+        //        await _context.SaveChangesAsync();
+        //        serviceResponse.Data = _mapper.Map<GetMenuDTO>(menu);
+        //    }
+        //    catch (Exception ex)
+        //    {
+
+        //        serviceResponse.Success = false;
+        //        serviceResponse.Message = ex.Message;
+        //    }
+
+        //    return serviceResponse;
+        //}
+
+        public async Task<ServiceResponse<List<GetMenuDTO>>> DeleteMenu(int id)
         {
-            var serviceResponse = new ServiceResponse<GetMenuDTO>();
+            var serviceResponse = new ServiceResponse<List<GetMenuDTO>>();
 
             try
             {
-                var menu = _context.Cardapio.FirstOrDefault(c => c.Id == newMenuMeal.cardapioId);
-
+                //var menu = await _context.Menu
+                //    .FirstOrDefaultAsync(m => m.Id == id);
+                var menu = GetById(id);
                 if (menu is null)
-                {
-                    serviceResponse.Success = false;
-                    serviceResponse.Message = "Menu not found.";
-                    return serviceResponse;
-                }
+                    throw new Exception($"Menu com id '{id}' não foi encontrado.");
 
-                var meal = _context.Refeicao.FirstOrDefault(x => x.Id == newMenuMeal.refeicaoId);
-
-                if (meal is null)
-                {
-                    serviceResponse.Success = false;
-                    serviceResponse.Message = "Meal not found.";
-                    return serviceResponse;
-                }
-
-                menu.Refeicoes!.Add(meal);
+                _context.Menu.Remove(menu);
                 await _context.SaveChangesAsync();
-                serviceResponse.Data = _mapper.Map<GetMenuDTO>(menu);
+
+                serviceResponse.Data =
+                    await _context.Menu
+                        .Where(m => m.Id == id)
+                        .Select(m => _mapper.Map<GetMenuDTO>(m)).ToListAsync();
+
+                serviceResponse.Message = "Menu removido com sucesso!";
             }
             catch (Exception ex)
             {
@@ -48,16 +103,15 @@ namespace RestauranteAPI.Repository
                 serviceResponse.Success = false;
                 serviceResponse.Message = ex.Message;
             }
-
             return serviceResponse;
         }
 
-        public async Task<ServiceResponse<GetMenuDTO>> UpdateMenuAsync(UpdateMenuDTO updatedMenu)
+        public async Task<ServiceResponse<GetMenuDTO>> UpdateMenu(UpdateMenuDTO updatedMenu)
         {
             var serviceResponse = new ServiceResponse<GetMenuDTO>();
             try
             {
-                var menu = GetById(updatedMenu.Id);
+                var menu = await _context.Menu.FirstOrDefaultAsync(m => m.Id == updatedMenu.Id);
                 if (menu is null)
                     throw new Exception($"Não foi possível encontrar cadastro do menu com Id '{updatedMenu.Id}'.");
 
@@ -65,6 +119,7 @@ namespace RestauranteAPI.Repository
 
                 await _context.SaveChangesAsync();
                 serviceResponse.Data = _mapper.Map<GetMenuDTO>(menu);
+                serviceResponse.Message = "Menu atualizado com sucesso!";
             }
             catch (Exception ex)
             {
@@ -72,6 +127,37 @@ namespace RestauranteAPI.Repository
                 serviceResponse.Message = ex.Message;
             }
             return serviceResponse;
+        }
+
+        public async Task<ServiceResponse<List<GetMenuDTO>>> GetAllMenus()
+        {
+            var serviceResponse = new ServiceResponse<List<GetMenuDTO>>();
+
+            var menus = await _context.Menu.ToListAsync();
+
+            serviceResponse.Data = menus.Select(m => _mapper.Map<GetMenuDTO>(m)).ToList();
+            serviceResponse.Message = "Listagem de Cardápios";
+            return serviceResponse;
+        }
+
+        public async Task<ServiceResponse<GetMenuDTO>> GetMenuById(int id)
+        {
+            var serviceResponse = new ServiceResponse<GetMenuDTO>();
+
+            var menu = await _context.Menu.FirstOrDefaultAsync(m => m.Id == id);
+
+            serviceResponse.Data = _mapper.Map<GetMenuDTO>(menu);
+
+            return serviceResponse;
+        }
+
+        public Menu GetById(int id)
+        {
+            var menu = _context.Menu.FirstOrDefault(m => m.Id == id);
+            if (menu is null)
+                throw new Exception($"Menu com id '{id}' não foi encontrado.");
+
+            return menu;
         }
     }
 }

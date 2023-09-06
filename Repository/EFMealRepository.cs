@@ -23,7 +23,7 @@ namespace RestauranteAPI.Repository
             var serviceResponse = new ServiceResponse<GetMealDTO>();
             try
             {
-                var meal = _context.Refeicao.FirstOrDefault(m => m.Id == updatedMeal.Id);
+                var meal = _context.Meal.FirstOrDefault(m => m.Id == updatedMeal.Id);
                 if (meal is null)
                     throw new Exception($"Refeição com Id '{updatedMeal.Id}' não foi encontrada, por favor verifique os dados.");
 

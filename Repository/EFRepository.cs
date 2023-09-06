@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using RestauranteAPI.Interface;
+using RestauranteAPI.Models;
 
 namespace RestauranteAPI.Repository
 {

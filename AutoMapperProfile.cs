@@ -11,6 +11,7 @@ namespace RestauranteAPI
         {
             CreateMap<Meal, GetMealDTO>();
             CreateMap<Menu, GetMenuDTO>();
+            CreateMap<AddMenuDTO, Menu>();
         }
     }
 }

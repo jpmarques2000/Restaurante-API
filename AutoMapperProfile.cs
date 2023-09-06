@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using RestauranteAPI.DTO.Meal;
 using RestauranteAPI.DTO.MenuDTO;
+using RestauranteAPI.DTO.User;
+using RestauranteAPI.DTO.UserDTO;
 using RestauranteAPI.Models;
 
 namespace RestauranteAPI
@@ -11,7 +13,10 @@ namespace RestauranteAPI
         {
             CreateMap<Meal, GetMealDTO>();
             CreateMap<Menu, GetMenuDTO>();
+            CreateMap<User, GetUserDTO>();
             CreateMap<AddMenuDTO, Menu>();
+            CreateMap<AddNewUserDTO, User>();
+            CreateMap<AddNewMealDTO, Meal>();
         }
     }
 }

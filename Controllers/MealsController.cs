@@ -43,9 +43,9 @@ namespace RestauranteAPI.Controllers
         /// <response code="401">Não Autenticado</response>
         /// <response code="403">Não Autorizado | Sem permissão</response>
         [HttpGet]
-        public IActionResult GetAllMeals() 
-        { 
-            return Ok(_refeicaoRepository.GetAll());
+        public async Task<ActionResult<ServiceResponse<List<GetMealDTO>>>> GetAllMeals()
+        {
+            return Ok(await _refeicaoRepository.GetAllMeal());
         }
 
 
@@ -61,9 +61,9 @@ namespace RestauranteAPI.Controllers
         /// <response code="401">Não Autenticado</response>
         /// <response code="403">Não Autorizado | Sem permissão</response>
         [HttpGet("get-by-meal-id/{id}")]
-        public IActionResult GetByMealId(int id)
+        public async Task<ActionResult<ServiceResponse<GetMealDTO>>> GetByMealId(int id)
         {
-            return Ok(_refeicaoRepository.GetById(id));
+            return Ok(await _refeicaoRepository.GetMealById(id));
         }
 
         /// <summary>
@@ -80,10 +80,9 @@ namespace RestauranteAPI.Controllers
         /// <response code="401">Não Autenticado</response>
         /// <response code="403">Não Autorizado | Sem permissão</response>
         [HttpPost]
-        public IActionResult NewMeal(AddNewMealDTO refeicaoDTO)
+        public async Task<ActionResult<ServiceResponse<List<GetMealDTO>>>> AddNewMeal(AddNewMealDTO refeicaoDTO)
         {
-             _refeicaoRepository.AddNew(new Meal(refeicaoDTO));
-            return Ok("Refeição cadastrada com sucesso!");
+            return Ok(await _refeicaoRepository.AddMeal(refeicaoDTO));
         }
 
         /// <summary>
@@ -100,10 +99,9 @@ namespace RestauranteAPI.Controllers
         /// <response code="401">Não Autenticado</response>
         /// <response code="403">Não Autorizado | Sem permissão</response>
         [HttpPut]
-        public async Task<ActionResult<ServiceResponse<ICollection<GetMealDTO>>>> UpdateMeal(UpdateMealDTO updateMeal)
+        public async Task<ActionResult<ServiceResponse<List<GetMealDTO>>>> UpdateMeal(UpdateMealDTO updateMeal)
         {
-            await _refeicaoRepository.UpdateMealAsync(updateMeal);
-            return Ok("Refeição alterada com sucesso");
+            return Ok(await _refeicaoRepository.UpdateMeal(updateMeal));
         }
 
         /// <summary>
@@ -115,10 +113,9 @@ namespace RestauranteAPI.Controllers
         /// <response code="401">Não Autenticado</response>
         /// <response code="403">Não Autorizado | Sem permissão</response>
         [HttpDelete]
-        public IActionResult DeleteMeal(int id) 
+        public async Task<ActionResult<ServiceResponse<GetMealDTO>>> DeleteMeal(int id)
         {
-            _refeicaoRepository.Delete(id);
-            return Ok("Refeição deletada com sucesso");
+            return Ok(await _refeicaoRepository.DeleteMeal(id));
         }
     }
 }

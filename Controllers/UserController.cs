@@ -27,9 +27,9 @@ namespace RestauranteAPI.Controllers
         /// <response code="401">Não Autenticado</response>
         /// <response code="403">Não Autorizado | Sem permissão</response>
         [HttpGet]
-        public IActionResult GetUsers()
+        public async Task<ActionResult<ServiceResponse<List<GetUserDTO>>>> GetUsers()
         {
-            return Ok(_userRepository.GetAll());
+            return Ok( await _userRepository.GetAllUser());
         }
 
         /// <summary>
@@ -44,9 +44,9 @@ namespace RestauranteAPI.Controllers
         /// <response code="401">Não Autenticado</response>
         /// <response code="403">Não Autorizado | Sem permissão</response>
         [HttpGet("get-by-id/{id}")]
-        public IActionResult GetUserById(int id)
+        public async Task<ActionResult<ServiceResponse<GetUserDTO>>> GetById(int id)
         {
-            return Ok(_userRepository.GetById(id));
+            return Ok(await _userRepository.GetUserById(id));
         }
 
         /// <summary>
@@ -63,10 +63,9 @@ namespace RestauranteAPI.Controllers
         /// <response code="401">Não Autenticado</response>
         /// <response code="403">Não Autorizado | Sem permissão</response>
         [HttpPost]
-        public IActionResult AddNewUser(AddNewUserDTO userDTO)
+        public async Task<ActionResult<ServiceResponse<List<GetUserDTO>>>> AddNewUser(AddNewUserDTO userDTO)
         {
-            _userRepository.AddNew(new User(userDTO));
-            return Ok("Usuário cadastrado com sucesso.");
+            return Ok(await _userRepository.AddUser(userDTO));
         }
 
         /// <summary>
@@ -83,10 +82,9 @@ namespace RestauranteAPI.Controllers
         /// <response code="401">Não Autenticado</response>
         /// <response code="403">Não Autorizado | Sem permissão</response> 
         [HttpPut]
-        public IActionResult UpdateUser(UpdateUserDTO userDTO)
+        public async Task<ActionResult<ServiceResponse<List<GetUserDTO>>>> UpdateUser(UpdateUserDTO userDTO)
         {
-            _userRepository.UpdateUserAsync(userDTO);
-            return Ok("Usuário alterado com sucesso.");
+            return Ok(await _userRepository.UpdateUser(userDTO));
         }
 
         /// <summary>
@@ -98,10 +96,9 @@ namespace RestauranteAPI.Controllers
         /// Enviar Id de usuário a ser removido
         /// </remarks>
         [HttpDelete]
-        public IActionResult DeleteUser(int id)
+        public async Task<ActionResult<ServiceResponse<GetUserDTO>>> DeleteUser(int id)
         {
-            _userRepository.Delete(id);
-            return Ok("Usuário removido com sucesso.");
+            return Ok(await _userRepository.DeleteUser(id));
         }
     }
 }

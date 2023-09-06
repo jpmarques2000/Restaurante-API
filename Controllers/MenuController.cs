@@ -2,7 +2,6 @@
 using RestauranteAPI.DTO.Menu;
 using RestauranteAPI.Models;
 using RestauranteAPI.Interface;
-using RestauranteAPI.Repository;
 using RestauranteAPI.DTO.MenuDTO;
 
 namespace RestauranteAPI.Controllers

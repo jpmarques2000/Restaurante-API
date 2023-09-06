@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Azure;
 using Microsoft.EntityFrameworkCore;
 using RestauranteAPI.DTO.Menu;
 using RestauranteAPI.DTO.MenuDTO;
@@ -83,7 +82,7 @@ namespace RestauranteAPI.Repository
             {
                 //var menu = await _context.Menu
                 //    .FirstOrDefaultAsync(m => m.Id == id);
-                var menu = GetById(id);
+                var menu = await GetById(id);
                 if (menu is null)
                     throw new Exception($"Menu com id '{id}' não foi encontrado.");
 
@@ -151,9 +150,9 @@ namespace RestauranteAPI.Repository
             return serviceResponse;
         }
 
-        public Menu GetById(int id)
+        public async Task<Menu> GetById(int id)
         {
-            var menu = _context.Menu.FirstOrDefault(m => m.Id == id);
+            var menu = await _context.Menu.FirstOrDefaultAsync(m => m.Id == id);
             if (menu is null)
                 throw new Exception($"Menu com id '{id}' não foi encontrado.");
 

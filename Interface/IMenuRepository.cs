@@ -1,5 +1,4 @@
-﻿using RestauranteAPI.DTO.Meal;
-using RestauranteAPI.DTO.Menu;
+﻿using RestauranteAPI.DTO.Menu;
 using RestauranteAPI.DTO.MenuDTO;
 using RestauranteAPI.Models;
 

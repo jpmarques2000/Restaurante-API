@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Azure;
 using Microsoft.EntityFrameworkCore;
 using RestauranteAPI.DTO.MenuDTO;
 using RestauranteAPI.DTO.Order;
@@ -18,6 +19,45 @@ namespace RestauranteAPI.Repository
             _context = context;
             _mapper = mapper;
         }
+
+        public async Task<ServiceResponse<GetOrderDTO>> AddOrderMeal(AddNewOrderMealDTO newOrderMeal)
+        {
+            var serviceResponse = new ServiceResponse<GetOrderDTO>();
+
+            try
+            {
+                var order = await _context.Order
+                    .Include(o => o.Refeicao)
+                    .FirstOrDefaultAsync(o => o.Id == newOrderMeal.PedidoId);
+
+                if (order is null)
+                {
+                    serviceResponse.Success = false;
+                    serviceResponse.Message = "Pedido não encontrado";
+                    return serviceResponse;
+                }
+
+                var meal = await _context.Meal
+                    .FirstOrDefaultAsync(m => m.Id == newOrderMeal.RefeicaoId);
+                if (meal is null)
+                {
+                    serviceResponse.Success = false;
+                    serviceResponse.Message = "Refeição não encontrada.";
+                    return serviceResponse;
+                }
+
+                order.Refeicao!.Add(meal);
+                await _context.SaveChangesAsync();
+                serviceResponse.Data = _mapper.Map<GetOrderDTO>(order);
+            }
+            catch (Exception ex)
+            {
+                serviceResponse.Success = false;
+                serviceResponse.Message = ex.Message;
+            }
+            return serviceResponse;
+        }
+
         public async Task<ServiceResponse<ICollection<GetOrderDTO>>> CreateOrder(AddNewOrderDTO newOrder)
         {
             var serviceResponse = new ServiceResponse<ICollection<GetOrderDTO>>();

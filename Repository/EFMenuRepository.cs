@@ -39,35 +39,35 @@ namespace RestauranteAPI.Repository
         public async Task<ServiceResponse<GetMenuDTO>> AddNewMealToMenu(AddMealToMenuDTO newMenuMeal)
         {
             var serviceResponse = new ServiceResponse<GetMenuDTO>();
-
             try
             {
-                var menu = await _context.Menu.FirstOrDefaultAsync(c => c.Id == newMenuMeal.cardapioId);
+                var menu = await _context.Menu
+                    .Include(m => m.Refeicoes)
+                    .FirstOrDefaultAsync(m => m.Id == newMenuMeal.cardapioId);
 
                 if (menu is null)
                 {
                     serviceResponse.Success = false;
-                    serviceResponse.Message = "Menu not found.";
+                    serviceResponse.Message = "Menu não foi encontrado.";
                     return serviceResponse;
                 }
 
-                var meal = await _context.Menu.FirstOrDefaultAsync(x => x.Id == newMenuMeal.refeicaoId);
-
+                var meal = await _context.Meal
+                    .FirstOrDefaultAsync(x => x.Id == newMenuMeal.refeicaoId);
                 if (meal is null)
                 {
                     serviceResponse.Success = false;
-                    serviceResponse.Message = "Meal not found.";
+                    serviceResponse.Message = "Refeição não encontrada.";
                     return serviceResponse;
                 }
-                var mappedMeal = _mapper.Map<Meal>(newMenuMeal);
 
-                menu.Refeicoes!.Add(mappedMeal);
+                menu.Refeicoes!.Add(meal);
                 await _context.SaveChangesAsync();
                 serviceResponse.Data = _mapper.Map<GetMenuDTO>(menu);
+                serviceResponse.Message = "Refeição adicionada ao menu com sucesso.";
             }
             catch (Exception ex)
             {
-
                 serviceResponse.Success = false;
                 serviceResponse.Message = ex.Message;
             }

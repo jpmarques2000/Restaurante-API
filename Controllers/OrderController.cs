@@ -86,5 +86,25 @@ namespace RestauranteAPI.Controllers
         {
             return Ok(await _orderRepository.DeleteOrder(id));
         }
+
+        /// <summary>
+        /// Adiciona refeição ao pedido
+        /// </summary>
+        /// <param name="newMeal"></param>
+        /// <returns></returns>
+        /// <remarks>
+        /// Dados:
+        /// 
+        /// Inserir Id do pedido e Id da refeição
+        /// </remarks>
+        /// <response code="200">Sucesso</response>
+        /// <response code="401">Não Autenticado</response>
+        /// <response code="403">Não Autorizado | Sem permissão</response>
+        [HttpPost("add-meal-to-order")]
+        public async Task<ActionResult<ServiceResponse<GetOrderDTO>>>
+            AddOrderMeal(AddNewOrderMealDTO newMeal)
+        {
+            return Ok(await _orderRepository.AddOrderMeal(newMeal));
+        }
     }
 }

@@ -14,5 +14,10 @@ namespace RestauranteAPI.Models
         //public Refeicao? Refeicao { get; set; }
         public ICollection<Meal>? Refeicao { get; set; }
 
+        public Order()
+        {
+            
+        }
+
     }
 }

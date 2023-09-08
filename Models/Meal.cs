@@ -15,8 +15,8 @@ namespace RestauranteAPI.Models
         [Column(TypeName = "varchar(200)")]
         [Required]
         public string? Descricao { get; set; }
-        public ICollection<Order>? Pedidos { get; set; }
-        public ICollection<Menu>? Cardapios { get; set; }
+        public ICollection<Order>? Pedido { get; set; }
+        public ICollection<Menu>? Cardapio { get; set; }
 
         public Meal()
         {

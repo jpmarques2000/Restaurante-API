@@ -11,6 +11,7 @@ namespace RestauranteAPI.Interface
         Task<ServiceResponse<List<GetMenuDTO>>> AddMenu(AddMenuDTO newMenu);
         Task<ServiceResponse<GetMenuDTO>> UpdateMenu(UpdateMenuDTO updatedMenu);
         Task<ServiceResponse<List<GetMenuDTO>>> DeleteMenu(int id);
-        //Task<ServiceResponse<GetMenuDTO>> AddNewMealToMenu(AddMealToMenuDTO newMenuMeal);
+        Task<ServiceResponse<GetMenuDTO>> AddNewMealToMenu(AddMealToMenuDTO newMenuMeal);
+        Task<ServiceResponse<List<GetMenuDTO>>> DeleteMealFromMenu(DeleteMealFromMenuDTO deletedMeal);
     }
 }

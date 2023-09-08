@@ -16,7 +16,6 @@ namespace RestauranteAPI.Repository
         public DbSet<User> User { get; set; }
         public DbSet<Order> Order { get; set; }
         public DbSet<Menu> Menu { get; set; }
-        public DbSet<MenuMeal> MenuMeal { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

@@ -86,12 +86,11 @@ namespace RestauranteAPI.Controllers
             return Ok(await _menuRepository.UpdateMenu(menuDTO));
         }
 
-        //[HttpPost("add-meal-to-menu")]
-        //public IActionResult AddNewMealToMenu(AddMealToMenuDTO newMenuMeal)
-        //{
-        //    _menuRepository.add(newMenuMeal);
-        //    return Ok("Refeição adicionado ao cardárpio");
-        //}
+        [HttpPost("add-meal-to-menu")]
+        public async Task<ActionResult<ServiceResponse<GetMenuDTO>>> AddNewMealToMenu(AddMealToMenuDTO newMenuMeal)
+        {
+            return Ok(await _menuRepository.AddNewMealToMenu(newMenuMeal));
+        }
 
         /// <summary>
         /// Exclui cardápio existente

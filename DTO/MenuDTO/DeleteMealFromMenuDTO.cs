@@ -1,6 +1,6 @@
-﻿namespace RestauranteAPI.Models
+﻿namespace RestauranteAPI.DTO.MenuDTO
 {
-    public class MenuMeal : Entity
+    public class DeleteMealFromMenuDTO
     {
         public int cardapioId { get; set; }
         public int refeicaoId { get; set; }

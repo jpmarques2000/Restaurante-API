@@ -36,43 +36,44 @@ namespace RestauranteAPI.Repository
             return serviceResponse;
         }
 
-        //public async Task<ServiceResponse<GetMenuDTO>> AddNewMealToMenu(AddMealToMenuDTO newMenuMeal)
-        //{
-        //    var serviceResponse = new ServiceResponse<GetMenuDTO>();
+        public async Task<ServiceResponse<GetMenuDTO>> AddNewMealToMenu(AddMealToMenuDTO newMenuMeal)
+        {
+            var serviceResponse = new ServiceResponse<GetMenuDTO>();
 
-        //    try
-        //    {
-        //        var menu = _context.Menu.FirstOrDefault(c => c.Id == newMenuMeal.cardapioId);
+            try
+            {
+                var menu = await _context.Menu.FirstOrDefaultAsync(c => c.Id == newMenuMeal.cardapioId);
 
-        //        if (menu is null)
-        //        {
-        //            serviceResponse.Success = false;
-        //            serviceResponse.Message = "Menu not found.";
-        //            return serviceResponse;
-        //        }
+                if (menu is null)
+                {
+                    serviceResponse.Success = false;
+                    serviceResponse.Message = "Menu not found.";
+                    return serviceResponse;
+                }
 
-        //        var meal = _context.Menu.FirstOrDefault(x => x.Id == newMenuMeal.refeicaoId);
+                var meal = await _context.Menu.FirstOrDefaultAsync(x => x.Id == newMenuMeal.refeicaoId);
 
-        //        if (meal is null)
-        //        {
-        //            serviceResponse.Success = false;
-        //            serviceResponse.Message = "Meal not found.";
-        //            return serviceResponse;
-        //        }
+                if (meal is null)
+                {
+                    serviceResponse.Success = false;
+                    serviceResponse.Message = "Meal not found.";
+                    return serviceResponse;
+                }
+                var mappedMeal = _mapper.Map<Meal>(newMenuMeal);
 
-        //        menu.Refeicoes!.Add(meal);
-        //        await _context.SaveChangesAsync();
-        //        serviceResponse.Data = _mapper.Map<GetMenuDTO>(menu);
-        //    }
-        //    catch (Exception ex)
-        //    {
+                menu.Refeicoes!.Add(mappedMeal);
+                await _context.SaveChangesAsync();
+                serviceResponse.Data = _mapper.Map<GetMenuDTO>(menu);
+            }
+            catch (Exception ex)
+            {
 
-        //        serviceResponse.Success = false;
-        //        serviceResponse.Message = ex.Message;
-        //    }
+                serviceResponse.Success = false;
+                serviceResponse.Message = ex.Message;
+            }
 
-        //    return serviceResponse;
-        //}
+            return serviceResponse;
+        }
 
         public async Task<ServiceResponse<List<GetMenuDTO>>> DeleteMenu(int id)
         {
@@ -157,6 +158,38 @@ namespace RestauranteAPI.Repository
                 throw new Exception($"Menu com id '{id}' não foi encontrado.");
 
             return menu;
+        }
+
+        public async Task<ServiceResponse<List<GetMenuDTO>>> DeleteMealFromMenu(DeleteMealFromMenuDTO deletedMeal)
+        {
+            var serviceResponse = new ServiceResponse<List<GetMenuDTO>>();
+
+            try
+            {
+                var id = deletedMeal.cardapioId;
+                var menu = await GetById(id);
+                if (menu is null)
+                    throw new Exception($"Menu com id '{id}' não foi encontrado.");
+                var meal = _mapper.Map<Meal>(deletedMeal);
+
+                //_context.MealMenu.Remove(meal);
+                menu.Refeicoes!.Remove(meal);
+                await _context.SaveChangesAsync();
+
+                serviceResponse.Data =
+                    await _context.Menu
+                        .Where(m => m.Id == id)
+                        .Select(m => _mapper.Map<GetMenuDTO>(m)).ToListAsync();
+
+                serviceResponse.Message = "Menu removido com sucesso!";
+            }
+            catch (Exception ex)
+            {
+
+                serviceResponse.Success = false;
+                serviceResponse.Message = ex.Message;
+            }
+            return serviceResponse;
         }
     }
 }

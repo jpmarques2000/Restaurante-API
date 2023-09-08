@@ -10,20 +10,9 @@ namespace RestauranteAPI.Models
         [Column(TypeName = "decimal(18,4)")]
         [Required]
         public decimal PrecoTotal { get; set; }
-        public User Usuario { get; set; }
+        public User? Usuario { get; set; }
         //public Refeicao? Refeicao { get; set; }
-        public ICollection<Meal> Refeicao { get; set; }
+        public ICollection<Meal>? Refeicao { get; set; }
 
-
-        public Order()
-        {
-
-        }
-
-        public Order(AddNewOrderDTO cadastrarPedidoDTO)
-        {
-            UsuarioId = cadastrarPedidoDTO.UsuarioId;
-            PrecoTotal = cadastrarPedidoDTO.PrecoTotal;
-        }
     }
 }

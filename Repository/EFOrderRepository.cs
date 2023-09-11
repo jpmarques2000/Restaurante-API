@@ -107,11 +107,50 @@ namespace RestauranteAPI.Repository
             return serviceResponse;
         }
 
+        public async Task<ServiceResponse<GetOrderDTO>> DeleteOrderMeal(DeleteOrderMealDTO deletedMeal)
+        {
+            var serviceResponse = new ServiceResponse<GetOrderDTO>();
+
+            try
+            {
+                var order = await _context.Order
+                    .Include(o => o.Refeicao)
+                    .FirstOrDefaultAsync(o => o.Id == deletedMeal.PedidoId);
+
+                if (order is null)
+                {
+                    serviceResponse.Success = false;
+                    serviceResponse.Message = "Pedido não encontrado";
+                    return serviceResponse;
+                }
+
+                var meal = await _context.Meal
+                    .FirstOrDefaultAsync(m => m.Id == deletedMeal.RefeicaoId);
+                if (meal is null)
+                {
+                    serviceResponse.Success = false;
+                    serviceResponse.Message = "Refeição não encontrada.";
+                    return serviceResponse;
+                }
+
+                order.Refeicao!.Remove(meal);
+                await _context.SaveChangesAsync();
+                serviceResponse.Data = _mapper.Map<GetOrderDTO>(order);
+                serviceResponse.Message = "Refeição removida do pedido com sucesso.";
+            }
+            catch (Exception ex)
+            {
+                serviceResponse.Success = false;
+                serviceResponse.Message = ex.Message;
+            }
+            return serviceResponse;
+        }
+
         public async Task<ServiceResponse<ICollection<GetOrderDTO>>> GetAllOrders()
         { 
             var serviceResponse = new ServiceResponse<ICollection<GetOrderDTO>>();
 
-            var orders = await _context.Order.ToListAsync();
+            var orders = await _context.Order.Include(o => o.Refeicao).ToListAsync();
 
             serviceResponse.Data = orders.Select(o => _mapper.Map<GetOrderDTO>(o)).ToList();
             serviceResponse.Message = "Listagem de pedidos";

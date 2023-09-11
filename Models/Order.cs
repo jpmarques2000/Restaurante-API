@@ -1,4 +1,5 @@
-﻿using RestauranteAPI.DTO.Order;
+﻿using RestauranteAPI.DTO.Meal;
+using RestauranteAPI.DTO.Order;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -17,6 +18,11 @@ namespace RestauranteAPI.Models
         public Order()
         {
             
+        }
+
+        public Order(AddNewOrderDTO newOrder)
+        {
+            UsuarioId = newOrder.UsuarioId;
         }
 
     }

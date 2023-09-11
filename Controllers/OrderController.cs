@@ -106,5 +106,12 @@ namespace RestauranteAPI.Controllers
         {
             return Ok(await _orderRepository.AddOrderMeal(newMeal));
         }
+
+        [HttpDelete("delete-meal-order")]
+        public async Task<ActionResult<ServiceResponse<GetOrderDTO>>>
+            DeleteOrderMeal(DeleteOrderMealDTO deletedMeal)
+        {
+            return Ok(await _orderRepository.DeleteOrderMeal(deletedMeal));
+        }
     }
 }

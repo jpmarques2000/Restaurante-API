@@ -5,8 +5,6 @@ namespace RestauranteAPI.Interface
 {
     public interface IMealRepository
     {
-        Meal GetOrders(int id);
-
         Task<ServiceResponse<GetMealDTO>> UpdateMeal(UpdateMealDTO updatedMeal);
         Task<ServiceResponse<List<GetMealDTO>>> GetAllMeal();
         Task<ServiceResponse<GetMealDTO>> GetMealById(int id);

@@ -167,5 +167,23 @@ namespace RestauranteAPI.Repository
 
             return serviceResponse;
         }
+
+        public Task<ServiceResponse<ICollection<GetOrderDTO>>> GetOrdersByMealId(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        //public async Task<ServiceResponse<ICollection<GetOrderDTO>>> GetOrdersByMealId(int id)
+        //{
+        //    var serviceResponse = new ServiceResponse<GetOrderDTO>();
+
+        //    var orders = await _context.Order
+        //        .Where(r => r.Refeicao!.Id = id)
+        //        .ToListAsync();
+
+        //    serviceResponse.Data = _mapper.Map<GetOrderDTO>(orders);
+
+        //    return serviceResponse;
+        //}
     }
 }

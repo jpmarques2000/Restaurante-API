@@ -123,5 +123,17 @@ namespace RestauranteAPI.Repository
 
             return user;
         }
+
+        public async Task<ServiceResponse<GetUserDTO>> LoginUser(LoginDTO userData)
+        {
+            var serviceResponse = new ServiceResponse<GetUserDTO>();
+
+            var user = await _context.User.FirstOrDefaultAsync(user =>
+                user.NomeUsuario == userData.NomeUsuario && user.Senha == userData.Senha);
+
+            serviceResponse.Data = _mapper.Map<GetUserDTO>(user);
+
+            return serviceResponse;
+        }
     }
 }

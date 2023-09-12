@@ -19,23 +19,6 @@ namespace RestauranteAPI.Controllers
         }
 
         /// <summary>
-        /// Obtém todos os pedidos da refeição
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        /// <remarks>
-        /// Enviar Id da refeição para realizar requisição
-        /// </remarks>
-        /// <response code="200">Sucesso</response>
-        /// <response code="401">Não Autenticado</response>
-        /// <response code="403">Não Autorizado | Sem permissão</response>
-        [HttpGet("orders/{id}")]
-        public IActionResult GetAllProductOrders(int id)
-        {
-            return Ok(_refeicaoRepository.GetOrders(id));
-        }
-
-        /// <summary>
         /// Obtém todas as refeições cadastradas
         /// </summary>
         /// <returns></returns>

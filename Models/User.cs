@@ -15,7 +15,7 @@ namespace RestauranteAPI.Models
         [Column(TypeName = "varchar(40)")]
         [Required]
         public string? Senha { get; set; }
-        public ICollection<Order> Pedidos { get; set; }
+        public ICollection<Order>? Pedidos { get; set; }
 
         public User()
         {

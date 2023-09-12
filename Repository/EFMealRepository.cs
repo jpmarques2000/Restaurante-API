@@ -85,11 +85,6 @@ namespace RestauranteAPI.Repository
             return serviceResponse;
         }
 
-        public Meal GetOrders(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<ServiceResponse<GetMealDTO>> UpdateMeal(UpdateMealDTO updatedMeal)
         {
             var serviceResponse = new ServiceResponse<GetMealDTO>();

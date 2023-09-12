@@ -13,6 +13,7 @@ namespace RestauranteAPI.Interface
         Task<ServiceResponse<ICollection<GetOrderDTO>>> DeleteOrder(int id);
         Task<ServiceResponse<GetOrderDTO>> AddOrderMeal(AddNewOrderMealDTO newOrderMeal);
         Task<ServiceResponse<GetOrderDTO>> DeleteOrderMeal(DeleteOrderMealDTO deletedMeal);
+        Task<ServiceResponse<ICollection<GetOrderDTO>>> GetOrdersByMealId(int id);
 
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RestauranteAPI.DTO.User;
 using RestauranteAPI.DTO.UserDTO;
 using RestauranteAPI.Interface;
@@ -26,6 +27,7 @@ namespace RestauranteAPI.Controllers
         /// <response code="200">Sucesso</response>
         /// <response code="401">Não Autenticado</response>
         /// <response code="403">Não Autorizado | Sem permissão</response>
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<ServiceResponse<List<GetUserDTO>>>> GetUsers()
         {
@@ -43,50 +45,12 @@ namespace RestauranteAPI.Controllers
         /// <response code="200">Sucesso</response>
         /// <response code="401">Não Autenticado</response>
         /// <response code="403">Não Autorizado | Sem permissão</response>
+        [Authorize]
         [HttpGet("get-by-id/{id}")]
         public async Task<ActionResult<ServiceResponse<GetUserDTO>>> GetById(int id)
         {
             return Ok(await _userRepository.GetUserById(id));
         }
-
-        /// <summary>
-        /// Cadastra novo usuário
-        /// </summary>
-        /// <param name="userDTO"></param>
-        /// <returns></returns>
-        /// <remarks>
-        /// Dados:
-        /// 
-        /// Nome, Nome de usuário e Senha
-        /// </remarks>
-        /// <response code="200">Sucesso</response>
-        /// <response code="401">Não Autenticado</response>
-        /// <response code="403">Não Autorizado | Sem permissão</response>
-        [HttpPost]
-        public async Task<ActionResult<ServiceResponse<List<GetUserDTO>>>> AddNewUser(AddNewUserDTO userDTO)
-        {
-            return Ok(await _userRepository.AddUser(userDTO));
-        }
-
-        /// <summary>
-        /// Altera dados do usuário já cadastrado
-        /// </summary>
-        /// <param name="userDTO"></param>
-        /// <returns></returns>
-        /// <remarks>
-        /// Dados:
-        /// 
-        /// Nome, Nome de usuário e Senha
-        /// </remarks>
-        /// <response code="200">Sucesso</response>
-        /// <response code="401">Não Autenticado</response>
-        /// <response code="403">Não Autorizado | Sem permissão</response> 
-        [HttpPut]
-        public async Task<ActionResult<ServiceResponse<List<GetUserDTO>>>> UpdateUser(UpdateUserDTO userDTO)
-        {
-            return Ok(await _userRepository.UpdateUser(userDTO));
-        }
-
         /// <summary>
         /// Deletar usuário
         /// </summary>
@@ -95,6 +59,7 @@ namespace RestauranteAPI.Controllers
         /// <remarks>
         /// Enviar Id de usuário a ser removido
         /// </remarks>
+        [Authorize]
         [HttpDelete]
         public async Task<ActionResult<ServiceResponse<GetUserDTO>>> DeleteUser(int id)
         {

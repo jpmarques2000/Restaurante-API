@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RestauranteAPI.DTO.Meal;
 using RestauranteAPI.Interface;
 using RestauranteAPI.Models;
@@ -25,6 +26,7 @@ namespace RestauranteAPI.Controllers
         /// <response code="200">Sucesso</response>
         /// <response code="401">Não Autenticado</response>
         /// <response code="403">Não Autorizado | Sem permissão</response>
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<ServiceResponse<List<GetMealDTO>>>> GetAllMeals()
         {
@@ -43,6 +45,7 @@ namespace RestauranteAPI.Controllers
         /// <response code="200">Sucesso</response>
         /// <response code="401">Não Autenticado</response>
         /// <response code="403">Não Autorizado | Sem permissão</response>
+        [Authorize]
         [HttpGet("get-by-meal-id/{id}")]
         public async Task<ActionResult<ServiceResponse<GetMealDTO>>> GetByMealId(int id)
         {
@@ -62,6 +65,7 @@ namespace RestauranteAPI.Controllers
         /// <response code="200">Sucesso</response>
         /// <response code="401">Não Autenticado</response>
         /// <response code="403">Não Autorizado | Sem permissão</response>
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<ServiceResponse<List<GetMealDTO>>>> AddNewMeal(AddNewMealDTO refeicaoDTO)
         {
@@ -81,6 +85,7 @@ namespace RestauranteAPI.Controllers
         /// <response code="200">Sucesso</response>
         /// <response code="401">Não Autenticado</response>
         /// <response code="403">Não Autorizado | Sem permissão</response>
+        [Authorize]
         [HttpPut]
         public async Task<ActionResult<ServiceResponse<List<GetMealDTO>>>> UpdateMeal(UpdateMealDTO updateMeal)
         {
@@ -95,6 +100,7 @@ namespace RestauranteAPI.Controllers
         /// <response code="200">Sucesso</response>
         /// <response code="401">Não Autenticado</response>
         /// <response code="403">Não Autorizado | Sem permissão</response>
+        [Authorize]
         [HttpDelete]
         public async Task<ActionResult<ServiceResponse<GetMealDTO>>> DeleteMeal(int id)
         {

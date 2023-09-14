@@ -3,6 +3,7 @@ using RestauranteAPI.DTO.Menu;
 using RestauranteAPI.Models;
 using RestauranteAPI.Interface;
 using RestauranteAPI.DTO.MenuDTO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace RestauranteAPI.Controllers
 {
@@ -26,6 +27,7 @@ namespace RestauranteAPI.Controllers
         /// <response code="200">Sucesso</response>
         /// <response code="401">Não Autenticado</response>
         /// <response code="403">Não Autorizado | Sem permissão</response>
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<ServiceResponse<GetMenuDTO>>> GetMenu()
         {
@@ -43,6 +45,7 @@ namespace RestauranteAPI.Controllers
         /// <response code="200">Sucesso</response>
         /// <response code="401">Não Autenticado</response>
         /// <response code="403">Não Autorizado | Sem permissão</response>
+        [Authorize]
         [HttpGet("get-by-id/{id}")]
         public async Task<ActionResult<ServiceResponse<List<GetMenuDTO>>>> GetMenusById(int id)
         {
@@ -60,6 +63,7 @@ namespace RestauranteAPI.Controllers
         /// <response code="200">Sucesso</response>
         /// <response code="401">Não Autenticado</response>
         /// <response code="403">Não Autorizado | Sem permissão</response>
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<ServiceResponse<List<GetMenuDTO>>>> AddMenu(AddMenuDTO menuDto)
         {
@@ -79,6 +83,7 @@ namespace RestauranteAPI.Controllers
         /// <response code="200">Sucesso</response>
         /// <response code="401">Não Autenticado</response>
         /// <response code="403">Não Autorizado | Sem permissão</response>
+        [Authorize]
         [HttpPut]
         public async Task<ActionResult<ServiceResponse<List<GetMenuDTO>>>> UpdateMenu(UpdateMenuDTO menuDTO)
         {
@@ -98,6 +103,7 @@ namespace RestauranteAPI.Controllers
         /// <response code="200">Sucesso</response>
         /// <response code="401">Não Autenticado</response>
         /// <response code="403">Não Autorizado | Sem permissão</response>
+        [Authorize]
         [HttpPost("add-meal-to-menu")]
         public async Task<ActionResult<ServiceResponse<GetMenuDTO>>> AddNewMealToMenu(AddMealToMenuDTO newMenuMeal)
         {
@@ -115,6 +121,7 @@ namespace RestauranteAPI.Controllers
         /// <response code="200">Sucesso</response>
         /// <response code="401">Não Autenticado</response>
         /// <response code="403">Não Autorizado | Sem permissão</response>
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<ActionResult<ServiceResponse<GetMenuDTO>>> DeleteMenu(int id)
         {

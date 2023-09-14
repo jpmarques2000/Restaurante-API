@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using RestauranteAPI.Data;
 using RestauranteAPI.Interface;
 using RestauranteAPI.Repository;
+using Swashbuckle.AspNetCore.Filters;
 using System.Reflection;
 using System.Text;
 
@@ -19,56 +21,34 @@ builder.Services.AddSwaggerGen( c =>
     var xmlpath = Path.Combine(AppContext.BaseDirectory, xmlfile);
     c.IncludeXmlComments(xmlpath);
 
-    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
     {
+        Description = """Standard Authorization header using the Bearer scheme. Example: "bearer {token}" """,
         In = ParameterLocation.Header,
-        Description = "Please insert JWT with Bearer into field",
         Name = "Authorization",
         Type = SecuritySchemeType.ApiKey
     });
-    c.AddSecurityRequirement(new OpenApiSecurityRequirement {
-   {
-     new OpenApiSecurityScheme
-     {
-       Reference = new OpenApiReference
-       {
-         Type = ReferenceType.SecurityScheme,
-         Id = "Bearer"
-       }
-      },
-      new string[] { }
-    }
-  });
+
+    c.OperationFilter<SecurityRequirementsOperationFilter>();
 });
 
+builder.Services.AddDbContext<ApplicationDbContext>(ServiceLifetime.Scoped);
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddScoped<IMealRepository, EFMealRepository>();
 builder.Services.AddScoped<IMenuRepository, EFMenuRepository>();
 builder.Services.AddScoped<IUserRepository, EFUserRepository>();
 builder.Services.AddScoped<IOrderRepository, EFOrderRepository>();
-builder.Services.AddDbContext<ApplicationDbContext>(ServiceLifetime.Scoped);
-
-var configuration = new ConfigurationBuilder()
-    .AddJsonFile("appsettings.json")
-    .Build();
-
-var key = Encoding.ASCII.GetBytes(configuration.GetValue<string>("Secret"));
-
-builder.Services.AddAuthentication(x =>
-{
-    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-})
-    .AddJwtBearer(x =>
+builder.Services.AddScoped<IAuthRepository, AuthRepository>();
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
     {
-        x.RequireHttpsMetadata = false;
-        x.SaveToken = true;
-        x.TokenValidationParameters = new TokenValidationParameters()
+        options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(key),
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
+                    .GetBytes(builder.Configuration.GetSection("AppSettings:Token").Value!)),
             ValidateIssuer = false,
-            ValidateAudience = false,
+            ValidateAudience = false
         };
     });
 

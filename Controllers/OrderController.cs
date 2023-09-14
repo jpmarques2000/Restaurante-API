@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RestauranteAPI.DTO.Order;
 using RestauranteAPI.DTO.OrderDTO;
 using RestauranteAPI.Interface;
@@ -26,6 +27,7 @@ namespace RestauranteAPI.Controllers
         /// <response code="200">Sucesso</response>
         /// <response code="401">Não Autenticado</response>
         /// <response code="403">Não Autorizado | Sem permissão</response>
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<ServiceResponse<ICollection<GetOrderDTO>>>> GetOrders()
         {
@@ -43,6 +45,7 @@ namespace RestauranteAPI.Controllers
         /// <response code="200">Sucesso</response>
         /// <response code="401">Não Autenticado</response>
         /// <response code="403">Não Autorizado | Sem permissão</response>
+        [Authorize]
         [HttpGet("get-order-by-id/{id}")]
         public async Task<ActionResult<ServiceResponse<GetOrderDTO>>> GetOrderById(int id)
         {
@@ -62,6 +65,7 @@ namespace RestauranteAPI.Controllers
         /// <response code="200">Sucesso</response>
         /// <response code="401">Não Autenticado</response>
         /// <response code="403">Não Autorizado | Sem permissão</response>
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<ServiceResponse<ICollection<GetOrderDTO>>>> 
             AddOrder(AddNewOrderDTO newOrder)
@@ -80,6 +84,7 @@ namespace RestauranteAPI.Controllers
         /// <response code="200">Sucesso</response>
         /// <response code="401">Não Autenticado</response>
         /// <response code="403">Não Autorizado | Sem permissão</response>
+        [Authorize]
         [HttpDelete]
         public async Task<ActionResult<ServiceResponse<ICollection<GetOrderDTO>>>>
             DeleteOrder(int id)
@@ -100,6 +105,7 @@ namespace RestauranteAPI.Controllers
         /// <response code="200">Sucesso</response>
         /// <response code="401">Não Autenticado</response>
         /// <response code="403">Não Autorizado | Sem permissão</response>
+        [Authorize]
         [HttpPost("add-meal-to-order")]
         public async Task<ActionResult<ServiceResponse<GetOrderDTO>>>
             AddOrderMeal(AddNewOrderMealDTO newMeal)
@@ -107,6 +113,18 @@ namespace RestauranteAPI.Controllers
             return Ok(await _orderRepository.AddOrderMeal(newMeal));
         }
 
+        /// <summary>
+        /// Remove refeição do pedido
+        /// </summary>
+        /// <param name="deletedMeal"></param>
+        /// <returns></returns>
+        /// <remarks>
+        /// Enviar Id da refeição a ser removida
+        /// </remarks>
+        /// <response code="200">Sucesso</response>
+        /// <response code="401">Não Autenticado</response>
+        /// <response code="403">Não Autorizado | Sem permissão</response>
+        [Authorize]
         [HttpDelete("delete-meal-order")]
         public async Task<ActionResult<ServiceResponse<GetOrderDTO>>>
             DeleteOrderMeal(DeleteOrderMealDTO deletedMeal)

@@ -18,7 +18,7 @@ namespace RestauranteAPI
             CreateMap<User, GetUserDTO>();
             CreateMap<Order, GetOrderDTO>();
             CreateMap<AddMenuDTO, Menu>();
-            CreateMap<AddNewUserDTO, User>();
+            CreateMap<UserRegisterDTO, User>();
             CreateMap<AddNewMealDTO, Meal>();
             CreateMap<AddNewOrderDTO, Order>();
             CreateMap<DeleteMealFromMenuDTO, Meal>();

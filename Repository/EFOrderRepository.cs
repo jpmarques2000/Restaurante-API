@@ -62,6 +62,7 @@ namespace RestauranteAPI.Repository
         {
             var serviceResponse = new ServiceResponse<ICollection<GetOrderDTO>>();
             var order = _mapper.Map<Order>(newOrder);
+            order.Usuario = await _context.User.FirstOrDefaultAsync(u => u.Id == newOrder.UsuarioId);
 
             _context.Order.Add(order);
             await _context.SaveChangesAsync();
@@ -161,7 +162,7 @@ namespace RestauranteAPI.Repository
         {
             var serviceResponse = new ServiceResponse<GetOrderDTO>();
 
-            var order = await _context.Order.FirstOrDefaultAsync(o => o.Id == id);
+            var order = await _context.Order.Include(o => o.Refeicao).FirstOrDefaultAsync(o => o.Id == id);
 
             serviceResponse.Data = _mapper.Map<GetOrderDTO>(order);
 

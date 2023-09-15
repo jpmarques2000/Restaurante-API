@@ -133,7 +133,7 @@ namespace RestauranteAPI.Repository
         {
             var serviceResponse = new ServiceResponse<List<GetMenuDTO>>();
 
-            var menus = await _context.Menu.ToListAsync();
+            var menus = await _context.Menu.Include(m => m.Refeicoes).ToListAsync();
 
             serviceResponse.Data = menus.Select(m => _mapper.Map<GetMenuDTO>(m)).ToList();
             serviceResponse.Message = "Listagem de Cardápios";
@@ -144,7 +144,7 @@ namespace RestauranteAPI.Repository
         {
             var serviceResponse = new ServiceResponse<GetMenuDTO>();
 
-            var menu = await _context.Menu.FirstOrDefaultAsync(m => m.Id == id);
+            var menu = await _context.Menu.Include(m => m.Refeicoes).FirstOrDefaultAsync(m => m.Id == id);
 
             serviceResponse.Data = _mapper.Map<GetMenuDTO>(menu);
 

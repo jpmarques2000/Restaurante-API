@@ -13,7 +13,8 @@ namespace RestauranteAPI.Controllers
         private readonly IMealRepository _refeicaoRepository;
         private readonly ILogger<MealsController> _logger;
 
-        public MealsController(IMealRepository refeicaoRepository, ILogger<MealsController> logger)
+        public MealsController(IMealRepository refeicaoRepository,
+            ILogger<MealsController> logger)
         {
             _refeicaoRepository = refeicaoRepository;
             _logger = logger;
@@ -31,6 +32,7 @@ namespace RestauranteAPI.Controllers
         public async Task<ActionResult<ServiceResponse<List<GetMealDTO>>>> GetAllMeals()
         {
             return Ok(await _refeicaoRepository.GetAllMeal());
+
         }
 
 
@@ -49,7 +51,16 @@ namespace RestauranteAPI.Controllers
         [HttpGet("get-by-meal-id/{id}")]
         public async Task<ActionResult<ServiceResponse<GetMealDTO>>> GetByMealId(int id)
         {
-            return Ok(await _refeicaoRepository.GetMealById(id));
+            try
+            {
+                return Ok(await _refeicaoRepository.GetMealById(id));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"{DateTime.Now} | Falha ao procurar refeição por Id: {ex.Message}");
+                return BadRequest();
+            }
+            
         }
 
         /// <summary>
@@ -69,7 +80,18 @@ namespace RestauranteAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<ServiceResponse<List<GetMealDTO>>>> AddNewMeal(AddNewMealDTO refeicaoDTO)
         {
-            return Ok(await _refeicaoRepository.AddMeal(refeicaoDTO));
+            try
+            {
+                return Ok(await _refeicaoRepository.AddMeal(refeicaoDTO));
+            }
+            catch (Exception ex)
+            {
+
+                _logger.LogError(ex, $"{DateTime.Now} | Erro ao adicionar nova refeição: " +
+                    $"{refeicaoDTO.Nome},: {ex.Message}");
+                return BadRequest();
+            }
+            
         }
 
         /// <summary>
@@ -89,7 +111,18 @@ namespace RestauranteAPI.Controllers
         [HttpPut]
         public async Task<ActionResult<ServiceResponse<List<GetMealDTO>>>> UpdateMeal(UpdateMealDTO updateMeal)
         {
-            return Ok(await _refeicaoRepository.UpdateMeal(updateMeal));
+            try
+            {
+                return Ok(await _refeicaoRepository.UpdateMeal(updateMeal));
+            }
+            catch (Exception ex)
+            {
+
+                _logger.LogError(ex, $"{DateTime.Now} | Erro ao atualizar refeição: " +
+                    $"{updateMeal.Nome}, Id {updateMeal.Id}: {ex.Message}");
+                return BadRequest();
+            }
+            
         }
 
         /// <summary>
@@ -104,7 +137,17 @@ namespace RestauranteAPI.Controllers
         [HttpDelete]
         public async Task<ActionResult<ServiceResponse<GetMealDTO>>> DeleteMeal(int id)
         {
-            return Ok(await _refeicaoRepository.DeleteMeal(id));
+            try
+            {
+                return Ok(await _refeicaoRepository.DeleteMeal(id));
+            }
+            catch (Exception ex)
+            {
+
+                _logger.LogError(ex, $"{DateTime.Now} | Erro ao remover refeição Id: {id}: {ex.Message}");
+                return BadRequest();
+            }
+            
         }
     }
 }

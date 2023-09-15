@@ -4,6 +4,7 @@ using RestauranteAPI.DTO.User;
 using RestauranteAPI.DTO.UserDTO;
 using RestauranteAPI.Interface;
 using RestauranteAPI.Models;
+using RestauranteAPI.Repository;
 
 namespace RestauranteAPI.Controllers
 {
@@ -49,7 +50,16 @@ namespace RestauranteAPI.Controllers
         [HttpGet("get-by-id/{id}")]
         public async Task<ActionResult<ServiceResponse<GetUserDTO>>> GetById(int id)
         {
-            return Ok(await _userRepository.GetUserById(id));
+            try
+            {
+                return Ok(await _userRepository.GetUserById(id));
+            }
+            catch (Exception ex)
+            {
+
+                _logger.LogError(ex, $"{DateTime.Now} | Erro ao buscar usuário Id: {id}: {ex.Message}");
+                return BadRequest();
+            }
         }
         /// <summary>
         /// Deletar usuário
@@ -63,7 +73,16 @@ namespace RestauranteAPI.Controllers
         [HttpDelete]
         public async Task<ActionResult<ServiceResponse<GetUserDTO>>> DeleteUser(int id)
         {
-            return Ok(await _userRepository.DeleteUser(id));
+            try
+            {
+                return Ok(await _userRepository.DeleteUser(id));
+            }
+            catch (Exception ex)
+            {
+
+                _logger.LogError(ex, $"{DateTime.Now} | Erro ao excluir usuário Id: {id}: {ex.Message}");
+                return BadRequest();
+            }
         }
     }
 }

@@ -1,11 +1,8 @@
-﻿using Azure.Core;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using RestauranteAPI.Data;
 using RestauranteAPI.DTO.User;
 using RestauranteAPI.DTO.UserDTO;
-using RestauranteAPI.Interface;
 using RestauranteAPI.Models;
-using RestauranteAPI.Services;
 
 namespace RestauranteAPI.Controllers
 {
@@ -14,10 +11,13 @@ namespace RestauranteAPI.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IAuthRepository _authRepository;
+        private readonly ILogger<AuthController> _logger;
 
-        public AuthController(IAuthRepository authRepository)
+        public AuthController(IAuthRepository authRepository,
+            ILogger<AuthController> logger)
         {
             _authRepository = authRepository;
+            _logger = logger;
         }
 
         /// <summary>
@@ -42,6 +42,7 @@ namespace RestauranteAPI.Controllers
                   Nome = userData.Nome },userData.Senha!);
             if(!response.Success)
             {
+                _logger.LogError(response.Message, $"{DateTime.Now} | Erro ao criar novo usuário: {response}");
                 return BadRequest(response);
             }
             return Ok(response);
@@ -64,6 +65,7 @@ namespace RestauranteAPI.Controllers
             var response = await _authRepository.Login(userData.NomeUsuario, userData.Senha);
             if(!response.Success)
             {
+                _logger.LogError(response.Message, $"{DateTime.Now} | Erro ao realizar autenticação: {response}");
                 return BadRequest(response);
             }
             return Ok(response);

@@ -4,6 +4,7 @@ using RestauranteAPI.Models;
 using RestauranteAPI.Interface;
 using RestauranteAPI.DTO.MenuDTO;
 using Microsoft.AspNetCore.Authorization;
+using Azure;
 
 namespace RestauranteAPI.Controllers
 {
@@ -49,7 +50,16 @@ namespace RestauranteAPI.Controllers
         [HttpGet("get-by-id/{id}")]
         public async Task<ActionResult<ServiceResponse<List<GetMenuDTO>>>> GetMenusById(int id)
         {
-            return Ok(await _menuRepository.GetMenuById(id));
+            try
+            {
+                return Ok(await _menuRepository.GetMenuById(id));
+            }
+            catch (Exception ex)
+            {
+
+                _logger.LogError(ex, $"{DateTime.Now} | Erro ao buscar menu Id: {id}: {ex.Message}");
+                return BadRequest();
+            }
         }
 
         /// <summary>
@@ -67,7 +77,16 @@ namespace RestauranteAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<ServiceResponse<List<GetMenuDTO>>>> AddMenu(AddMenuDTO menuDto)
         {
-            return Ok(await _menuRepository.AddMenu(menuDto));
+            try
+            {
+                return Ok(await _menuRepository.AddMenu(menuDto));
+            }
+            catch (Exception ex)
+            {
+
+                _logger.LogError(ex, $"{DateTime.Now} | Erro ao cadastrar menu: {menuDto.NomeCardapio}: {ex.Message}");
+                return BadRequest();
+            }
         }
 
         /// <summary>
@@ -87,7 +106,16 @@ namespace RestauranteAPI.Controllers
         [HttpPut]
         public async Task<ActionResult<ServiceResponse<List<GetMenuDTO>>>> UpdateMenu(UpdateMenuDTO menuDTO)
         {
-            return Ok(await _menuRepository.UpdateMenu(menuDTO));
+            try
+            {
+                return Ok(await _menuRepository.UpdateMenu(menuDTO));
+            }
+            catch (Exception ex)
+            {
+
+                _logger.LogError(ex, $"{DateTime.Now} | Erro ao atualizar menu Id: {menuDTO.Id}: {ex.Message}");
+                return BadRequest();
+            }
         }
 
         /// <summary>
@@ -125,7 +153,16 @@ namespace RestauranteAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<ServiceResponse<GetMenuDTO>>> DeleteMenu(int id)
         {
-            return Ok(await _menuRepository.DeleteMenu(id));
+            try
+            {
+                return Ok(await _menuRepository.DeleteMenu(id));
+            }
+            catch (Exception ex)
+            {
+
+                _logger.LogError(ex, $"{DateTime.Now} | Erro ao excluir menu Id: {id}: {ex.Message}");
+                return BadRequest();
+            }
         }
     }
 }

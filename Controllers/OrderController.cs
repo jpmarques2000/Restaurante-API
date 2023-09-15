@@ -4,6 +4,7 @@ using RestauranteAPI.DTO.Order;
 using RestauranteAPI.DTO.OrderDTO;
 using RestauranteAPI.Interface;
 using RestauranteAPI.Models;
+using RestauranteAPI.Repository;
 
 namespace RestauranteAPI.Controllers
 {
@@ -49,7 +50,16 @@ namespace RestauranteAPI.Controllers
         [HttpGet("get-order-by-id/{id}")]
         public async Task<ActionResult<ServiceResponse<GetOrderDTO>>> GetOrderById(int id)
         {
-            return Ok(await _orderRepository.GetOrderById(id));
+            try
+            {
+                return Ok(await _orderRepository.GetOrderById(id));
+            }
+            catch (Exception ex)
+            {
+
+                _logger.LogError(ex, $"{DateTime.Now} | Erro ao buscar pedido Id: {id}: {ex.Message}");
+                return BadRequest();
+            }
         }
 
         /// <summary>
@@ -70,7 +80,16 @@ namespace RestauranteAPI.Controllers
         public async Task<ActionResult<ServiceResponse<ICollection<GetOrderDTO>>>> 
             AddOrder(AddNewOrderDTO newOrder)
         {
-            return Ok(await _orderRepository.CreateOrder(newOrder));
+            try
+            {
+                return Ok(await _orderRepository.CreateOrder(newOrder));
+            }
+            catch (Exception ex)
+            {
+
+                _logger.LogError(ex, $"{DateTime.Now} | Erro ao criar novo pedido: {ex.Message}");
+                return BadRequest();
+            }
         }
 
         /// <summary>
@@ -89,7 +108,16 @@ namespace RestauranteAPI.Controllers
         public async Task<ActionResult<ServiceResponse<ICollection<GetOrderDTO>>>>
             DeleteOrder(int id)
         {
-            return Ok(await _orderRepository.DeleteOrder(id));
+            try
+            {
+                return Ok(await _orderRepository.DeleteOrder(id));
+            }
+            catch (Exception ex)
+            {
+
+                _logger.LogError(ex, $"{DateTime.Now} | Erro ao excluir pedido Id: {id}: {ex.Message}");
+                return BadRequest();
+            }
         }
 
         /// <summary>
@@ -110,7 +138,17 @@ namespace RestauranteAPI.Controllers
         public async Task<ActionResult<ServiceResponse<GetOrderDTO>>>
             AddOrderMeal(AddNewOrderMealDTO newMeal)
         {
-            return Ok(await _orderRepository.AddOrderMeal(newMeal));
+            try
+            {
+                return Ok(await _orderRepository.AddOrderMeal(newMeal));
+            }
+            catch (Exception ex)
+            {
+
+                _logger.LogError(ex, $"{DateTime.Now} | Erro ao adicionar refeição Id {newMeal.RefeicaoId}" +
+                    $" ao pedido Id: {newMeal.PedidoId}: {ex.Message}");
+                return BadRequest();
+            }
         }
 
         /// <summary>
@@ -129,7 +167,17 @@ namespace RestauranteAPI.Controllers
         public async Task<ActionResult<ServiceResponse<GetOrderDTO>>>
             DeleteOrderMeal(DeleteOrderMealDTO deletedMeal)
         {
-            return Ok(await _orderRepository.DeleteOrderMeal(deletedMeal));
+            try
+            {
+                return Ok(await _orderRepository.DeleteOrderMeal(deletedMeal));
+            }
+            catch (Exception ex)
+            {
+
+                _logger.LogError(ex, $"{DateTime.Now} | Erro ao excluir refeição Id {deletedMeal.RefeicaoId}" +
+                    $" do pedido Id: {deletedMeal.PedidoId}: {ex.Message}");
+                return BadRequest();
+            }
         }
     }
 }

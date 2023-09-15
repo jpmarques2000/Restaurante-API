@@ -3,6 +3,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using RestauranteAPI.Data;
 using RestauranteAPI.Interface;
+using RestauranteAPI.Logging;
 using RestauranteAPI.Repository;
 using Swashbuckle.AspNetCore.Filters;
 using System.Reflection;
@@ -39,6 +40,11 @@ builder.Services.AddScoped<IMenuRepository, EFMenuRepository>();
 builder.Services.AddScoped<IUserRepository, EFUserRepository>();
 builder.Services.AddScoped<IOrderRepository, EFOrderRepository>();
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
+builder.Logging.ClearProviders();
+builder.Logging.AddProvider(new CustomLoggerProvider(new CustomLoggerProviderConfiguration()
+{
+    LogLevel = LogLevel.Information
+}));
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {

@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using RestauranteAPI.Models;
 using RestauranteAPI.Repository;
-using RestauranteAPI.Services;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 

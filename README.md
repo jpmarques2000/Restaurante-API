@@ -173,7 +173,7 @@ Returns a menu.
 #### Add a meal to a menu
 
 ```http
-  POST /Order/add-meal-to-menu/
+  POST /Cardapio/add-meal-to-menu/
 ```
 
 | Parâmetro   | Tipo       | Descrição                                   |
@@ -184,7 +184,7 @@ Returns a menu.
 #### Delete a meal of a menu
 
 ```http
-  Delete /Order/delete-meal-order/
+  Delete /Cardapio/delete-meal-menu/
 ```
 
 | Parâmetro   | Tipo       | Descrição                                   |
@@ -247,7 +247,7 @@ Returns an order.
 | `pedidoId`      | `id` | **Obrigatório**. Order Id |
 | `refeicaoId`      | `string` | **Obrigatório**. Meal Id |
 
-#### Delete Menu
+#### Delete Order
 
 ```http
   Delete /Order
